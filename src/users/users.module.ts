@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { UsersMiddlewareConfig } from './middlewares/users.middleware.config';
 import { UsersController } from './users.controller';
-import { UsersRoutes } from './users.routes';
 import { UsersService } from './users.service';
 
 @Module({
@@ -9,6 +9,6 @@ import { UsersService } from './users.service';
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    UsersRoutes.configureRoutes(consumer);
+    UsersMiddlewareConfig.configure(consumer);
   }
 }

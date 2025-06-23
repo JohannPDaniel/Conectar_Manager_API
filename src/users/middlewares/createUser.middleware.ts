@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
 @Injectable()
-export class UsersMiddleware implements NestMiddleware {
+export class createUserMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     if (!this.validateRequired(req, res)) return;
     if (!this.validateTypes(req, res)) return;

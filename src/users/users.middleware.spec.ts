@@ -1,7 +1,7 @@
-import { UsersMiddleware } from './users.middleware';
+import { createUserMiddleware } from './middlewares/createUser.middleware';
 
 describe('UsersMiddleware', () => {
   it('should be defined', () => {
-    expect(new UsersMiddleware()).toBeDefined();
+    expect(new createUserMiddleware()).toBeDefined();
   });
 });
