@@ -58,7 +58,7 @@ export class UsersMiddleware implements NestMiddleware {
   private validateData(req: Request, res: Response): boolean {
     const { name, email } = req.body;
 
-    if (name.lenght < 4) {
+    if (name.length < 4) {
       res.status(400).json({
         success: false,
         message: 'O atributo "name" deve ter no mínimo 4 caracteres !!!',
