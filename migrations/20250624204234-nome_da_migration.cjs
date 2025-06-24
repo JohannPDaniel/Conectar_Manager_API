@@ -40,9 +40,13 @@ module.exports = {
         defaultValue: Sequelize.NOW,
       },
     });
+    await queryInterface.renameColumn('users', 'createdAt', 'created_at');
+    await queryInterface.renameColumn('users', 'updatedAt', 'updated_at');
   },
 
   async down(queryInterface, _Sequelize) {
     await queryInterface.dropTable('users');
+    await queryInterface.renameColumn('users', 'createdAt', 'created_at');
+    await queryInterface.renameColumn('users', 'updatedAt', 'updated_at');
   },
 };
