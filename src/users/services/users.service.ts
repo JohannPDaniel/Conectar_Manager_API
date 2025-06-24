@@ -2,12 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { createUser } from '../../db/create-user.db';
 import { Bcrypt } from '../../utils/bcrypt';
-
 @Injectable()
 export class UsersService {
   public async create(data: { name: string; email: string; password: string }) {
     const index = createUser.findIndex((e) => e.email === data.email);
-
     if (index !== -1) {
       return {
         success: false,

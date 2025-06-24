@@ -7,12 +7,14 @@ export class UsersController {
 
   @Post()
   @HttpCode(201)
-  create(@Body() body: { name: string; email: string; password: string }) {
+  public create(
+    @Body() body: { name: string; email: string; password: string },
+  ) {
     return this.userService.create(body);
   }
 
   @Get()
-  findAll() {
+  public findAll() {
     return this.userService.findAll();
   }
 }
