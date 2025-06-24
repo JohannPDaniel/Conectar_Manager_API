@@ -3,15 +3,16 @@ Content-Type: application/json
 
 {
     "name": "Johann",
-    "email": "abc@email.com"
+    "email": "abc@email.com",
+    "password": "senha123"
 }
 
 HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 106
-etag: W/"6a-qneYX1hxXP9W0i45YBlnbq8So2s"
-date: Mon, 23 Jun 2025 21:09:58 GMT
+content-length: 82
+etag: W/"52-1e679B2HkuoeimRhiBumOsbft0g"
+date: Tue, 24 Jun 2025 17:16:20 GMT
 connection: close
 ###
 GET http://localhost:3030/users
@@ -19,7 +20,7 @@ GET http://localhost:3030/users
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 110
-etag: W/"6e-jpKuUB3DIK4DlmexjWUdcISHMEA"
-date: Mon, 23 Jun 2025 21:10:04 GMT
+content-length: 306
+etag: W/"132-5oWUMSmrD05PRifM6N5wXZVs/AU"
+date: Tue, 24 Jun 2025 17:13:21 GMT
 connection: close

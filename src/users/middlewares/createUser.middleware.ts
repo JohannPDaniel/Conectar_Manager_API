@@ -34,7 +34,7 @@ export class createUserMiddleware implements NestMiddleware {
   }
 
   private validateTypes(req: Request, res: Response): boolean {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
     if (typeof name !== 'string') {
       res.status(400).json({
@@ -52,11 +52,19 @@ export class createUserMiddleware implements NestMiddleware {
       return false;
     }
 
+    if (password && typeof password !== 'string') {
+      res.status(400).json({
+        success: false,
+        message: 'O atributo "senha" deve ser um texto!',
+      });
+      return false;
+    }
+
     return true;
   }
 
   private validateData(req: Request, res: Response): boolean {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
     if (name.length < 4) {
       res.status(400).json({
@@ -71,6 +79,14 @@ export class createUserMiddleware implements NestMiddleware {
       res.status(400).json({
         success: false,
         message: 'O e-mail informado é inválido!',
+      });
+      return false;
+    }
+
+    if (password && password.length < 4) {
+      res.status(400).json({
+        success: false,
+        message: 'O atributo "senha" ter no mínimo 4 caracteres!',
       });
       return false;
     }
