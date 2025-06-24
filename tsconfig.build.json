@@ -1,5 +1,12 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
-  "include": ["src", "models", "config"]
+  "exclude": [
+    "node_modules",
+    "test",
+    "dist",
+    "**/*spec.ts",
+    "config",
+    ".sequelizerc.cjs"
+  ],
+  "include": ["src", "models"]
 }
