@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { createUser } from '../../db/create-user.db';
+import { createUser } from '../../config/create-user.db';
 import { Bcrypt } from '../../utils/bcrypt';
 @Injectable()
 export class UsersService {
