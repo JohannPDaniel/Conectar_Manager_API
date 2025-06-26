@@ -4,15 +4,16 @@ Content-Type: application/json
 {
     "name": "Johann",
     "email": "abc@email.com",
-    "password": "senha123"
+    "password": "senha123",
+    "role": "USER"
 }
 
-HTTP/1.1 201  - Created
+HTTP/1.1 500  - Internal Server Error
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 82
-etag: W/"52-1e679B2HkuoeimRhiBumOsbft0g"
-date: Tue, 24 Jun 2025 17:16:20 GMT
+content-length: 52
+etag: W/"34-rlKccw1E+/fV8niQk4oFitDfPro"
+date: Thu, 26 Jun 2025 01:24:21 GMT
 connection: close
 ###
 GET http://localhost:3030/users

@@ -2,8 +2,8 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -24,6 +24,8 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }

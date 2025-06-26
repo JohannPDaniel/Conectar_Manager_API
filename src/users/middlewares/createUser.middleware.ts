@@ -1,5 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
+import { UserRole } from '../../types/userRoles';
 
 @Injectable()
 export class createUserMiddleware implements NestMiddleware {
@@ -12,7 +13,7 @@ export class createUserMiddleware implements NestMiddleware {
   }
 
   private validateRequired(req: Request, res: Response): boolean {
-    const { name, email } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name) {
       res.status(400).json({
@@ -30,11 +31,27 @@ export class createUserMiddleware implements NestMiddleware {
       return false;
     }
 
+    if (!password) {
+      res.status(400).json({
+        success: false,
+        message: 'O atributo "password" é obrigatório!',
+      });
+      return false;
+    }
+
+    if (!role) {
+      res.status(400).json({
+        success: false,
+        message: 'O atributo "permissão" é obrigatório!',
+      });
+      return false;
+    }
+
     return true;
   }
 
   private validateTypes(req: Request, res: Response): boolean {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (typeof name !== 'string') {
       res.status(400).json({
@@ -52,10 +69,18 @@ export class createUserMiddleware implements NestMiddleware {
       return false;
     }
 
-    if (password && typeof password !== 'string') {
+    if (typeof password !== 'string') {
       res.status(400).json({
         success: false,
         message: 'O atributo "senha" deve ser um texto!',
+      });
+      return false;
+    }
+
+    if (role !== UserRole.ADMIN && role !== UserRole.USER) {
+      res.status(400).json({
+        success: false,
+        message: 'O atributo "permissão" deve ser do tipo (ADMIN) ou (USER)',
       });
       return false;
     }
