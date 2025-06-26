@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { CreateUserDto } from '../dto/createUser.dto';
 import { UsersService } from '../services/users.service';
+import { User } from '../user.model';
 
 @Controller('users')
 export class UsersController {
@@ -8,7 +8,15 @@ export class UsersController {
 
   @Post()
   @HttpCode(201)
-  public create(@Body() body: CreateUserDto) {
-    return this.userService.create(body);
+  public async create(@Body() body: User) {
+    try {
+      return await this.userService.create(body);
+    } catch (error: any) {
+      return {
+        success: false,
+        code: 500,
+        message: `Erro no servidor: ${error.message}`,
+      };
+    }
   }
 }

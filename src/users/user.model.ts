@@ -2,17 +2,30 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
 import { UserRole } from '../types/userRoles';
 import { CreateUserDto } from './dto/createUser.dto';
 
-@Table
+@Table({ tableName: 'users' })
 export class User extends Model<User, CreateUserDto> {
+  @Column({
+    type: DataType.UUID,
+    primaryKey: true,
+    defaultValue: DataType.UUIDV4,
+  })
+  declare id: string;
+
   @Column({ type: DataType.STRING, allowNull: false })
-  name!: string;
+  declare name: string;
 
   @Column({ type: DataType.STRING, allowNull: false, unique: true })
-  email!: string;
+  declare email: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
-  password!: string;
+  declare password: string;
 
   @Column({ type: DataType.ENUM(...Object.values(UserRole)), allowNull: false })
-  role!: UserRole;
+  declare role: UserRole;
+
+  @Column({ field: 'created_at' })
+  declare createdAt: Date;
+
+  @Column({ field: 'updated_at' })
+  declare updatedAt: Date;
 }

@@ -1,12 +1,14 @@
+import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+
+@Injectable()
 export class Bcrypt {
-  public async generateHash(password: string): Promise<string> {
-    const hash = await bcrypt.hash(password, Number(process.env.BCRYPT_SALT));
-    return hash;
+  async generateHash(password: string): Promise<string> {
+    const salt = Number(process.env.BCRYPT_SALT) || 10;
+    return bcrypt.hash(password, salt);
   }
 
-  public async verify(password: string, hash: string): Promise<boolean> {
-    const isValid = await bcrypt.compare(password, hash);
-    return isValid;
+  async verify(password: string, hash: string): Promise<boolean> {
+    return bcrypt.compare(password, hash);
   }
 }

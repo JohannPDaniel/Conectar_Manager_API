@@ -3,17 +3,17 @@ Content-Type: application/json
 
 {
     "name": "Johann",
-    "email": "abc@email.com",
+    "email": "abcd@email.com",
     "password": "senha123",
-    "role": "USER"
+    "role": "admin"
 }
 
-HTTP/1.1 500  - Internal Server Error
+HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 52
-etag: W/"34-rlKccw1E+/fV8niQk4oFitDfPro"
-date: Thu, 26 Jun 2025 01:24:21 GMT
+content-length: 255
+etag: W/"ff-AP1qFpIxaCcXUUXb9wphV6fTPjc"
+date: Thu, 26 Jun 2025 17:17:32 GMT
 connection: close
 ###
 GET http://localhost:3030/users
