@@ -4,6 +4,7 @@
     "checkJs": true,
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,

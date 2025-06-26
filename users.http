@@ -13,7 +13,7 @@ x-powered-by: Express
 content-type: application/json; charset=utf-8
 content-length: 74
 etag: W/"4a-7CWsxdk5Sj/6h3oH9YLcDN/sp5Q"
-date: Thu, 26 Jun 2025 17:26:34 GMT
+date: Thu, 26 Jun 2025 21:10:37 GMT
 connection: close
 ###
 POST http://localhost:3030/auth/login
@@ -28,6 +28,6 @@ HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
 content-length: 298
-etag: W/"12a-89TZkvfmEOB6aniXXd197hw/KmE"
-date: Thu, 26 Jun 2025 20:34:59 GMT
+etag: W/"12a-h2gwbwQUluXWBYpceUVqT3zqPnA"
+date: Thu, 26 Jun 2025 21:10:42 GMT
 connection: close

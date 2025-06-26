@@ -23,7 +23,7 @@ export class AuthService {
     }
 
     const hash = user.password;
-    const isValidPassword = await this.bcrypt.generateHash(hash);
+    const isValidPassword = await this.bcrypt.verify(data.password, hash);
 
     if (!isValidPassword) {
       return {
@@ -36,6 +36,7 @@ export class AuthService {
     const payload: AuthUser = {
       id: user.id,
       name: user.name,
+      role: user.role,
     };
 
     const token = this.jwt.generateToken(payload);

@@ -1,6 +1,9 @@
+import { UserRole } from '../../types/userRoles';
+
 export interface AuthUser {
   id: string;
   name: string;
+  role: UserRole;
 }
 
 export interface DecodedToken extends AuthUser {
