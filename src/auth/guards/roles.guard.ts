@@ -1,7 +1,6 @@
-// src/auth/guards/roles.guard.ts
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Request as ExpressRequest } from 'express';
+import { CustomRequest } from '../../types/customRequest';
 
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
@@ -13,7 +12,7 @@ export class RolesGuard implements CanActivate {
     ]);
     if (!requiredRoles) return true;
 
-    const request = context.switchToHttp().getRequest<ExpressRequest>();
+    const request = context.switchToHttp().getRequest<CustomRequest>();
     const user = request.user;
 
     if (!user || !requiredRoles.includes(user.role)) {

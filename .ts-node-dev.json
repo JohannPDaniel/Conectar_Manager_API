@@ -1,0 +1,6 @@
+{
+  "respawn": true,
+  "transpileOnly": true,
+  "ignore": ["dist", ".tsbuildinfo", "**/*.spec.ts", "**/*.test.ts"],
+  "ext": "ts,json"
+}

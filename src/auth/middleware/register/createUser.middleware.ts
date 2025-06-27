@@ -1,15 +1,20 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { UserRole } from '../../types/userRoles';
+import { UserRole } from '../../../types/userRoles';
 
 @Injectable()
 export class createUserMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    if (!this.validateRequired(req, res)) return;
-    if (!this.validateTypes(req, res)) return;
-    if (!this.validateData(req, res)) return;
+    console.log('🧩 Entrou no middleware de register');
+    if (req.method === 'POST' && req.path === '/auth/register') {
+      console.log('✅ Entrou no middleware /auth/register');
+      // pode validar aqui normalmente
+    }
+    // if (!this.validateRequired(req, res)) return;
+    // if (!this.validateTypes(req, res)) return;
+    // if (!this.validateData(req, res)) return;
 
-    next();
+    return next();
   }
 
   private validateRequired(req: Request, res: Response): boolean {
@@ -46,11 +51,10 @@ export class createUserMiddleware implements NestMiddleware {
       });
       return false;
     }
-
     return true;
   }
 
-  private validateTypes(req: Request, res: Response): boolean {
+  private validateTypes(req: Request, res: Response): boolean | void {
     const { name, email, password, role } = req.body;
 
     if (typeof name !== 'string') {
@@ -84,11 +88,9 @@ export class createUserMiddleware implements NestMiddleware {
       });
       return false;
     }
-
-    return true;
   }
 
-  private validateData(req: Request, res: Response): boolean {
+  private validateData(req: Request, res: Response): boolean | void {
     const { name, email, password } = req.body;
 
     if (name.length < 4) {
@@ -115,7 +117,6 @@ export class createUserMiddleware implements NestMiddleware {
       });
       return false;
     }
-
     return true;
   }
 }

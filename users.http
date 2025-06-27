@@ -11,9 +11,9 @@ Content-Type: application/json
 HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 74
-etag: W/"4a-7CWsxdk5Sj/6h3oH9YLcDN/sp5Q"
-date: Thu, 26 Jun 2025 21:10:37 GMT
+content-length: 255
+etag: W/"ff-nZsnTx4sbmh3zRWTNJr/1FAm2VQ"
+date: Fri, 27 Jun 2025 22:26:31 GMT
 connection: close
 ###
 POST http://localhost:3030/auth/login
@@ -27,7 +27,22 @@ Content-Type: application/json
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 298
-etag: W/"12a-h2gwbwQUluXWBYpceUVqT3zqPnA"
-date: Thu, 26 Jun 2025 21:10:42 GMT
+content-length: 68
+etag: W/"44-xtu1t2NgmGYxm66rMoaAScW7cvI"
+date: Fri, 27 Jun 2025 22:24:09 GMT
+connection: close
+###
+POST http://localhost:3030/debug
+Content-Type: application/json
+
+{
+    "msg": "teste"
+}
+
+HTTP/1.1 201  - Created
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 34
+etag: W/"22-v1E6vD46f34pJ5YYhplGJdWSMy8"
+date: Fri, 27 Jun 2025 22:24:12 GMT
 connection: close

@@ -4,7 +4,6 @@
     "checkJs": true,
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "typeRoots": ["./node_modules/@types", "./src/types"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -17,6 +16,9 @@
     "outDir": "./dist",
     "rootDir": ".",
     "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -28,5 +30,5 @@
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
 }

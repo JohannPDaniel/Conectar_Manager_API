@@ -7,6 +7,7 @@ export class LoginMiddleware implements NestMiddleware {
     if (!this.validateRequired(req, res)) return;
     if (!this.validateTypes(req, res)) return;
     if (!this.validateData(req, res)) return;
+
     next();
   }
 

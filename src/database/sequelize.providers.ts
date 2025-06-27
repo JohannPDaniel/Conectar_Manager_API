@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import { User } from '../users/user.model';
+import { User } from '../auth/user.model';
 
 export const databaseProviders = [
   {
@@ -14,6 +14,12 @@ export const databaseProviders = [
         dialect: 'postgres',
         models: [User],
         logging: false,
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false, // ⚠️ cuidado com isso em produção
+          },
+        },
       });
 
       await sequelize.authenticate();
