@@ -1,12 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { UserRole } from '../../types/userRoles';
-import { Bcrypt } from '../../utils/bcrypt';
-import { JWT } from '../../utils/jwt';
-import { CreateUserDto } from '../dto/createUser.dto';
-import { LoginDto } from '../dto/loginDto';
-import { UserDto } from '../dto/user.dto';
+import { Bcrypt, JWT } from '../../utils';
+import { AuthUser, CreateUserDto, LoginDto, UserDto } from '../dto';
 import { User } from '../user.model';
-import { AuthUser } from '../dto/authUser';
 
 @Injectable()
 export class AuthService {
