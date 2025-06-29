@@ -1,7 +1,13 @@
-import { CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CustomRequest } from '../../types/customRequest';
 
+@Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
@@ -16,7 +22,11 @@ export class RolesGuard implements CanActivate {
     const user = request.user;
 
     if (!user || !requiredRoles.includes(user.role)) {
-      return false;
+      throw new ForbiddenException({
+        success: false,
+        code: 403,
+        message: 'Você não tem permissão para acessar este recurso.',
+      });
     }
 
     return requiredRoles.includes(user.role); // Só passa se o role do usuário está nos permitidos

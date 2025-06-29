@@ -26,7 +26,7 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('Token inválido');
     }
 
-    request.user = user; // Isso é crucial para o RolesGuard funcionar depois
+    request.user = user;
     return true;
   }
 }

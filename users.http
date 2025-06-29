@@ -3,46 +3,62 @@ Content-Type: application/json
 
 {
     "name": "Johann",
-    "email": "email@email.com",
+    "email": "abcd@email.com",
     "password": "senha123",
-    "role": "admin"
+    "role": "user"
 }
-
-HTTP/1.1 201  - Created
-x-powered-by: Express
-content-type: application/json; charset=utf-8
-content-length: 74
-etag: W/"4a-7CWsxdk5Sj/6h3oH9YLcDN/sp5Q"
-date: Sun, 29 Jun 2025 01:45:12 GMT
-connection: close
 ###
 POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-    "email": "email@email.com",
+    "email": "abcd@email.com",
     "password": "senha123"
 }
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 318
-etag: W/"13e-LXArLMFk0CHSCRZpC8Q1lS+/u6M"
-date: Sun, 29 Jun 2025 01:40:51 GMT
+content-length: 319
+etag: W/"13f-xxILOMmDWAiiHBXnI2idJYkilxI"
+date: Sun, 29 Jun 2025 22:15:04 GMT
 connection: close
 ###
-POST http://localhost:3030/debug
-Content-Type: application/json
+GET http://localhost:3030/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhjMjNiY2U1LTFhMTktNDE2My1iY2UyLWNhZWZjMTlmMzlmNiIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTEyMjg4NDksImV4cCI6MTc1MTMxNTI0OX0.ne_8BT97WmNfa0nWfavzdTgZq3Ux8kp2wsUe3hjjOLk
 
-{
-    "msg": "teste"
-}
-
-HTTP/1.1 201  - Created
+HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 34
-etag: W/"22-v1E6vD46f34pJ5YYhplGJdWSMy8"
-date: Sat, 28 Jun 2025 22:29:51 GMT
+content-length: 446
+etag: W/"1be-+w5L9KB+vrzXkM+ZBlSDOyRqoSU"
+date: Sun, 29 Jun 2025 21:57:06 GMT
+connection: close
+###
+GET http://localhost:3030/users/a74f538b-31f7-46b1-92b7-7a51299fa9cb
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3NGY1MzhiLTMxZjctNDZiMS05MmI3LTdhNTEyOTlmYTljYiIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MTIzNDQ1MywiZXhwIjoxNzUxMzIwODUzfQ.xqVoBvdNCLyZit-5P6cB5ZzB47Ci23NGi3nPiFRojjk
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 271
+etag: W/"10f-ZTcRhDNgK4rGrojWeOnLHcBQdkk"
+date: Sun, 29 Jun 2025 22:12:25 GMT
+connection: close
+###
+PUT http://localhost:3030/users/a74f538b-31f7-46b1-92b7-7a51299fa9cb
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3NGY1MzhiLTMxZjctNDZiMS05MmI3LTdhNTEyOTlmYTljYiIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMjM1MzA0LCJleHAiOjE3NTEzMjE3MDR9.o0fDZkS1s0Qp8gJT3ofhpiK4R1-KxcdV1f4nrSkIKik
+
+{
+    "name": "Roberto",
+    "role": "admin"
+}
+
+HTTP/1.1 200  - OK
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 260
+etag: W/"104-HtBa1lxztwjdHFZeQlTylECviiQ"
+date: Sun, 29 Jun 2025 22:22:34 GMT
 connection: close

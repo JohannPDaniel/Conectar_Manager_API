@@ -1,11 +1,12 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
+import { CustomRequest } from '../../../types';
 import { JWT } from '../../../utils/jwt';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   constructor(private readonly jwt: JWT) {}
-  use(req: Request, res: Response, next: NextFunction) {
+  use(req: CustomRequest, res: Response, next: NextFunction) {
     const authorization = req.headers.authorization;
 
     if (!authorization) {
@@ -45,6 +46,12 @@ export class AuthMiddleware implements NestMiddleware {
       });
       return;
     }
+
+    req.user = {
+      id: userDecode.id,
+      name: userDecode.name,
+      role: userDecode.role,
+    };
 
     next();
   }

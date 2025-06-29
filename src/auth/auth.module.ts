@@ -1,13 +1,14 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module';
+import { SessionModule } from '../session/session.module';
 import { Bcrypt, JWT } from '../utils';
 import { AuthController } from './controllers/auth.controller';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { AuthService } from './service/auth.service';
 import { MiddlewareConfig } from './middleware/middleware.config';
+import { AuthService } from './service/auth.service';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, SessionModule],
   controllers: [AuthController],
   providers: [AuthService, JWT, JwtAuthGuard, Bcrypt],
   exports: [AuthService, JWT, JwtAuthGuard, Bcrypt],
