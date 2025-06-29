@@ -4,22 +4,18 @@ import { NextFunction, Request, Response } from 'express';
 @Injectable()
 export class LoginMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    if (!this.validateRequired(req, res)) return;
-    if (!this.validateTypes(req, res)) return;
-    if (!this.validateData(req, res)) return;
-
-    next();
-  }
-
-  private validateRequired(req: Request, res: Response): boolean {
+    if (req.method !== 'POST' || !req.originalUrl.startsWith('/auth/login')) {
+      return next();
+    }
     const { email, password } = req.body;
+    const emailRegex = /^[^\s@]{3,}@[^\s@]{3,}\.com$/;
 
     if (!email) {
       res.status(400).json({
         success: false,
         message: 'O atributo (email) é obrigatório !!!',
       });
-      return false;
+      return;
     }
 
     if (!password) {
@@ -27,21 +23,15 @@ export class LoginMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo (senha) é obrigatório !!!',
       });
-      return false;
+      return;
     }
-
-    return true;
-  }
-
-  private validateTypes(req: Request, res: Response): boolean {
-    const { email, password } = req.body;
 
     if (typeof email !== 'string') {
       res.status(400).json({
         success: false,
         message: 'O atributo (email) de vir em formato de texto !!!',
       });
-      return false;
+      return;
     }
 
     if (typeof password !== 'string') {
@@ -52,12 +42,6 @@ export class LoginMiddleware implements NestMiddleware {
       return false;
     }
 
-    return true;
-  }
-  private validateData(req: Request, res: Response): boolean {
-    const { email, password } = req.body;
-
-    const emailRegex = /^[^\s@]{3,}@[^\s@]{3,}\.com$/;
     if (!emailRegex.test(email)) {
       res.status(400).json({
         success: false,
@@ -67,14 +51,13 @@ export class LoginMiddleware implements NestMiddleware {
       return false;
     }
 
-    if (typeof password !== 'string') {
+    if (password.length < 4) {
       res.status(400).json({
         success: false,
-        message: 'O atributo (senha) de vir em formato de texto !!!',
+        message: 'O atributo (senha) deve ter no mínimo 4 caracteres !!!',
       });
       return false;
     }
-
-    return true;
+    return next();
   }
 }

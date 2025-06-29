@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "name": "Johann",
-    "email": "abcd@email.com",
+    "email": "email@email.com",
     "password": "senha123",
     "role": "admin"
 }
@@ -11,25 +11,25 @@ Content-Type: application/json
 HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 255
-etag: W/"ff-nZsnTx4sbmh3zRWTNJr/1FAm2VQ"
-date: Fri, 27 Jun 2025 22:26:31 GMT
+content-length: 74
+etag: W/"4a-7CWsxdk5Sj/6h3oH9YLcDN/sp5Q"
+date: Sun, 29 Jun 2025 01:45:12 GMT
 connection: close
 ###
 POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-    "email": "abcd@email.com",
+    "email": "email@email.com",
     "password": "senha123"
 }
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 68
-etag: W/"44-xtu1t2NgmGYxm66rMoaAScW7cvI"
-date: Fri, 27 Jun 2025 22:24:09 GMT
+content-length: 318
+etag: W/"13e-LXArLMFk0CHSCRZpC8Q1lS+/u6M"
+date: Sun, 29 Jun 2025 01:40:51 GMT
 connection: close
 ###
 POST http://localhost:3030/debug
@@ -44,5 +44,5 @@ x-powered-by: Express
 content-type: application/json; charset=utf-8
 content-length: 34
 etag: W/"22-v1E6vD46f34pJ5YYhplGJdWSMy8"
-date: Fri, 27 Jun 2025 22:24:12 GMT
+date: Sat, 28 Jun 2025 22:29:51 GMT
 connection: close

@@ -5,27 +5,15 @@ import { UserRole } from '../../../types/userRoles';
 @Injectable()
 export class createUserMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log('🧩 Entrou no middleware de register');
-    if (req.method === 'POST' && req.path === '/auth/register') {
-      console.log('✅ Entrou no middleware /auth/register');
-      // pode validar aqui normalmente
-    }
-    // if (!this.validateRequired(req, res)) return;
-    // if (!this.validateTypes(req, res)) return;
-    // if (!this.validateData(req, res)) return;
-
-    return next();
-  }
-
-  private validateRequired(req: Request, res: Response): boolean {
     const { name, email, password, role } = req.body;
+    const emailRegex = /^[^\s@]{3,}@[^\s@]{3,}\.com$/;
 
     if (!name) {
       res.status(400).json({
         success: false,
         message: 'O atributo "name" é obrigatório!',
       });
-      return false;
+      return;
     }
 
     if (!email) {
@@ -33,7 +21,7 @@ export class createUserMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo "email" é obrigatório!',
       });
-      return false;
+      return;
     }
 
     if (!password) {
@@ -41,7 +29,7 @@ export class createUserMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo "password" é obrigatório!',
       });
-      return false;
+      return;
     }
 
     if (!role) {
@@ -49,20 +37,15 @@ export class createUserMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo "permissão" é obrigatório!',
       });
-      return false;
+      return;
     }
-    return true;
-  }
-
-  private validateTypes(req: Request, res: Response): boolean | void {
-    const { name, email, password, role } = req.body;
 
     if (typeof name !== 'string') {
       res.status(400).json({
         success: false,
         message: 'O atributo "name" deve ser um texto!',
       });
-      return false;
+      return;
     }
 
     if (typeof email !== 'string') {
@@ -70,7 +53,7 @@ export class createUserMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo "email" deve ser um texto!',
       });
-      return false;
+      return;
     }
 
     if (typeof password !== 'string') {
@@ -78,7 +61,7 @@ export class createUserMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo "senha" deve ser um texto!',
       });
-      return false;
+      return;
     }
 
     if (role !== UserRole.ADMIN && role !== UserRole.USER) {
@@ -86,28 +69,24 @@ export class createUserMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo "permissão" deve ser do tipo (ADMIN) ou (USER)',
       });
-      return false;
+      return;
     }
-  }
-
-  private validateData(req: Request, res: Response): boolean | void {
-    const { name, email, password } = req.body;
 
     if (name.length < 4) {
       res.status(400).json({
         success: false,
         message: 'O atributo "name" deve ter no mínimo 4 caracteres !!!',
       });
-      return false;
+      return;
     }
 
-    const emailRegex = /^[^\s@]{3,}@[^\s@]{3,}\.com$/;
     if (!emailRegex.test(email)) {
       res.status(400).json({
         success: false,
-        message: 'O e-mail informado é inválido!',
+        message:
+          'O e-mail informado deve estar em um formato de E-mail ****@****.com',
       });
-      return false;
+      return;
     }
 
     if (password && password.length < 4) {
@@ -115,8 +94,9 @@ export class createUserMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo "senha" ter no mínimo 4 caracteres!',
       });
-      return false;
+      return;
     }
-    return true;
+
+    return next();
   }
 }
