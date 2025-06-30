@@ -1,32 +1,42 @@
 import {
-  CanActivate,
   ExecutionContext,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CustomRequest } from '../../types/customRequest';
-import { JWT } from '../../utils/jwt';
+import { AuthGuard } from '@nestjs/passport';
+import { SessionService } from '../../session/session.service';
+import { CustomRequest } from '../../types';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
-  constructor(private readonly jwt: JWT) {}
+export class JwtAuthGuard extends AuthGuard('jwt') {
+  constructor(private readonly sessionService: SessionService) {
+    super();
+  }
 
-  canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest<CustomRequest>();
-    const authHeader = request.headers.authorization;
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    try {
+      const req = context.switchToHttp().getRequest<CustomRequest>();
+      const can = await super.canActivate(context);
+      if (!can) return false;
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Token não fornecido');
+      const authHeader = req.headers.authorization;
+      const token =
+        typeof authHeader === 'string' ? authHeader.split(' ')[1] : null;
+      if (!token) return false;
+
+      const sessionExists = await this.sessionService.isTokenValid(
+        req.user.id,
+        token,
+      );
+
+      if (!sessionExists) {
+        throw new UnauthorizedException('Sessão inválida ou expirada');
+      }
+
+      return true;
+    } catch (error: any) {
+      console.error('Erro no JwtAuthGuard:', error.message); // 👈 isso aqui vai revelar o problema real
+      throw new UnauthorizedException('Erro na autenticação');
     }
-
-    const token = authHeader.split(' ')[1];
-    const user = this.jwt.verifyToken(token);
-
-    if (!user) {
-      throw new UnauthorizedException('Token inválido');
-    }
-
-    request.user = user;
-    return true;
   }
 }

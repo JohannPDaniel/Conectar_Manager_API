@@ -1,8 +1,8 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { CreateUserDto } from '../auth/dto/createUser.dto';
 import { UserRole } from '../types/userRoles';
-import { CreateUserDto } from './dto/createUser.dto';
 
-@Table({ tableName: 'users' })
+@Table({ tableName: 'users', timestamps: true })
 export class User extends Model<User, CreateUserDto> {
   @Column({
     type: DataType.UUID,
@@ -23,9 +23,19 @@ export class User extends Model<User, CreateUserDto> {
   @Column({ type: DataType.ENUM(...Object.values(UserRole)), allowNull: false })
   declare role: UserRole;
 
-  @Column({ field: 'created_at' })
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+    field: 'created_at',
+  })
   declare createdAt: Date;
 
-  @Column({ field: 'updated_at' })
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+    field: 'updated_at',
+  })
   declare updatedAt: Date;
 }

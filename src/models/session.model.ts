@@ -7,7 +7,7 @@ import {
   Default,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'sessions', timestamps: false })
+@Table({ tableName: 'sessions', timestamps: true })
 export class Session extends Model {
   @PrimaryKey
   @Default(DataType.UUIDV4)
@@ -19,4 +19,20 @@ export class Session extends Model {
 
   @Column({ type: DataType.TEXT, allowNull: false })
   declare token: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+    field: 'created_at',
+  })
+  declare createdAt: Date;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+    field: 'updated_at',
+  })
+  declare updatedAt: Date;
 }

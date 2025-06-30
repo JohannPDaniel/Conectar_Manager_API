@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { AuthUser, UserDto } from '../../auth/dto';
-import { User } from '../../auth/user.model';
+import { User } from '../../models/user.model';
+import { SessionService } from '../../session/session.service';
 import { ResponseAPI, UserRole } from '../../types';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
+  constructor(
+    private sessionService: SessionService, // 👈 adicione isso
+  ) {}
+
   async findAll() {
     const users = await User.findAll();
     return {
@@ -59,7 +64,6 @@ export class UserService {
       };
     }
 
-    // Apenas admin ou o próprio usuário pode atualizar
     const isAdmin = currentUser.role === UserRole.ADMIN;
     const isSelf = currentUser.id === user.id;
 
@@ -71,8 +75,8 @@ export class UserService {
       };
     }
 
-    // Se não for admin e tentar alterar o campo "role" → bloqueia
-    if (!isAdmin && 'role' in data) {
+    // 🚫 Impede user comum de atualizar o campo role se ele estiver presente e definido
+    if (!isAdmin && data.role !== undefined) {
       return {
         success: false,
         code: 403,
@@ -80,10 +84,15 @@ export class UserService {
       };
     }
 
-    // Se o usuário for admin e quiser se rebaixar para "user", permitimos
-    // Se ele não for admin e mandar o role, vamos forçar para manter "user"
     if (!isAdmin) {
       delete data.role;
+    }
+
+    const isDowngrading =
+      isAdmin && data.role === UserRole.USER && user.role === UserRole.ADMIN;
+
+    if (isDowngrading) {
+      await this.sessionService.invalidateUserTokens(user.id);
     }
 
     const updatedUser = await user.update(data);

@@ -3,16 +3,24 @@ Content-Type: application/json
 
 {
     "name": "Johann",
-    "email": "abcd@email.com",
+    "email": "email@email.com",
     "password": "senha123",
-    "role": "user"
+    "role": "admin"
 }
+
+HTTP/1.1 201  - Created
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 256
+etag: W/"100-YiXRGFzoT8GjZ2nk6g5hZEpYjjI"
+date: Mon, 30 Jun 2025 21:30:59 GMT
+connection: close
 ###
 POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-    "email": "abcd@email.com",
+    "email": "email@email.com",
     "password": "senha123"
 }
 
@@ -20,45 +28,45 @@ HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
 content-length: 319
-etag: W/"13f-xxILOMmDWAiiHBXnI2idJYkilxI"
-date: Sun, 29 Jun 2025 22:15:04 GMT
+etag: W/"13f-YMCCzXHTHpJTnvSMOeFkwgX9j00"
+date: Mon, 30 Jun 2025 22:19:01 GMT
 connection: close
 ###
 GET http://localhost:3030/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhjMjNiY2U1LTFhMTktNDE2My1iY2UyLWNhZWZjMTlmMzlmNiIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTEyMjg4NDksImV4cCI6MTc1MTMxNTI0OX0.ne_8BT97WmNfa0nWfavzdTgZq3Ux8kp2wsUe3hjjOLk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1MjMxYmZiLWIxYjgtNGRmZi1hNTYxLWZhYWZjMDIwNzBkOSIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMzIxOTQxLCJleHAiOjE3NTE0MDgzNDF9._18nVZod15VkeufwZigw61TT7qhEtNjW1_LUM93J2Os
 
-HTTP/1.1 200  - OK
+HTTP/1.1 401  - Unauthorized
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 446
-etag: W/"1be-+w5L9KB+vrzXkM+ZBlSDOyRqoSU"
-date: Sun, 29 Jun 2025 21:57:06 GMT
+content-length: 76
+etag: W/"4c-3nvM967fo4I41bFN7xtztnMcZmw"
+date: Mon, 30 Jun 2025 22:25:37 GMT
 connection: close
 ###
-GET http://localhost:3030/users/a74f538b-31f7-46b1-92b7-7a51299fa9cb
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3NGY1MzhiLTMxZjctNDZiMS05MmI3LTdhNTEyOTlmYTljYiIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MTIzNDQ1MywiZXhwIjoxNzUxMzIwODUzfQ.xqVoBvdNCLyZit-5P6cB5ZzB47Ci23NGi3nPiFRojjk
+GET http://localhost:3030/users/75231bfb-b1b8-4dff-a561-faafc02070d9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1MjMxYmZiLWIxYjgtNGRmZi1hNTYxLWZhYWZjMDIwNzBkOSIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMzIwMzg5LCJleHAiOjE3NTE0MDY3ODl9.gTjvNeEZEVCPszB9xbaPHKbtaK1Yyd9_LmcOBnl8aRk
 
-HTTP/1.1 200  - OK
+HTTP/1.1 500  - Internal Server Error
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 271
-etag: W/"10f-ZTcRhDNgK4rGrojWeOnLHcBQdkk"
-date: Sun, 29 Jun 2025 22:12:25 GMT
+content-length: 52
+etag: W/"34-rlKccw1E+/fV8niQk4oFitDfPro"
+date: Mon, 30 Jun 2025 21:53:23 GMT
 connection: close
 ###
-PUT http://localhost:3030/users/a74f538b-31f7-46b1-92b7-7a51299fa9cb
+PUT http://localhost:3030/users/75231bfb-b1b8-4dff-a561-faafc02070d9
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3NGY1MzhiLTMxZjctNDZiMS05MmI3LTdhNTEyOTlmYTljYiIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMjM1MzA0LCJleHAiOjE3NTEzMjE3MDR9.o0fDZkS1s0Qp8gJT3ofhpiK4R1-KxcdV1f4nrSkIKik
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1MjMxYmZiLWIxYjgtNGRmZi1hNTYxLWZhYWZjMDIwNzBkOSIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMzE5NTY3LCJleHAiOjE3NTE0MDU5Njd9.Q9ciGrHLoIM5bfFNWD0_gCykpxPnMRcME5FviY4qLDc
 
 {
     "name": "Roberto",
     "role": "admin"
 }
 
-HTTP/1.1 200  - OK
+HTTP/1.1 500  - Internal Server Error
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 260
-etag: W/"104-HtBa1lxztwjdHFZeQlTylECviiQ"
-date: Sun, 29 Jun 2025 22:22:34 GMT
+content-length: 52
+etag: W/"34-rlKccw1E+/fV8niQk4oFitDfPro"
+date: Mon, 30 Jun 2025 21:53:00 GMT
 connection: close
