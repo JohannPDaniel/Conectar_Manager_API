@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Session, User } from '../models';
+import { User } from '../models/user.model';
 
 @Module({
   imports: [
     SequelizeModule.forRoot({
       dialect: 'postgres',
       uri: process.env.DATABASE_URL,
-      models: [User, Session],
+      models: [User],
       autoLoadModels: true,
       synchronize: false,
       logging: false,

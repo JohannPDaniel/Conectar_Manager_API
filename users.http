@@ -3,70 +3,81 @@ Content-Type: application/json
 
 {
     "name": "Johann",
-    "email": "email@email.com",
+    "email": "abcd@email.com",
     "password": "senha123",
-    "role": "admin"
+    "role": "user"
 }
 
 HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 256
-etag: W/"100-YiXRGFzoT8GjZ2nk6g5hZEpYjjI"
-date: Mon, 30 Jun 2025 21:30:59 GMT
+content-length: 254
+etag: W/"fe-4YKXkV7skXauHv0FNlaPsrg5Vow"
+date: Tue, 01 Jul 2025 19:57:38 GMT
 connection: close
 ###
 POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-    "email": "email@email.com",
+    "email": "abcd@email.com",
     "password": "senha123"
 }
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 319
-etag: W/"13f-YMCCzXHTHpJTnvSMOeFkwgX9j00"
-date: Mon, 30 Jun 2025 22:19:01 GMT
+content-length: 318
+etag: W/"13e-PFwI3UsKMio/Jx7KeUXQ4AKktpQ"
+date: Tue, 01 Jul 2025 20:20:41 GMT
 connection: close
 ###
-GET http://localhost:3030/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1MjMxYmZiLWIxYjgtNGRmZi1hNTYxLWZhYWZjMDIwNzBkOSIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMzIxOTQxLCJleHAiOjE3NTE0MDgzNDF9._18nVZod15VkeufwZigw61TT7qhEtNjW1_LUM93J2Os
+GET http://localhost:3030/users?sortBy=createdAt&order=asc&role=admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVlYjE5ZmYzLWU2NzUtNDcxNy1hMjMyLTJkMzg0MzM0MDhkYiIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxNDAxMDI0LCJleHAiOjE3NTE0ODc0MjR9.eKD7dw8s6h4vpylHYRSNCDls95adQs14Dp7UXX4ztf4
 
-HTTP/1.1 401  - Unauthorized
+HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 76
-etag: W/"4c-3nvM967fo4I41bFN7xtztnMcZmw"
-date: Mon, 30 Jun 2025 22:25:37 GMT
+content-length: 264
+etag: W/"108-+OOEtGd7+j0ZVNkgVPzoA71IyF0"
+date: Tue, 01 Jul 2025 22:20:31 GMT
 connection: close
 ###
-GET http://localhost:3030/users/75231bfb-b1b8-4dff-a561-faafc02070d9
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1MjMxYmZiLWIxYjgtNGRmZi1hNTYxLWZhYWZjMDIwNzBkOSIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMzIwMzg5LCJleHAiOjE3NTE0MDY3ODl9.gTjvNeEZEVCPszB9xbaPHKbtaK1Yyd9_LmcOBnl8aRk
+GET http://localhost:3030/users/eeb19ff3-e675-4717-a232-2d38433408db
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUwN2EzZWU2LTUwMDYtNGMyNy05ZTJkLThlMGE1ODQxMzQxOSIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTE0MDA4MTIsImV4cCI6MTc1MTQ4NzIxMn0.dQUwcu1NBrCjs3maejv5IYbo2W-PLIPyXxI3I9_SB74
 
-HTTP/1.1 500  - Internal Server Error
+HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 52
-etag: W/"34-rlKccw1E+/fV8niQk4oFitDfPro"
-date: Mon, 30 Jun 2025 21:53:23 GMT
+content-length: 88
+etag: W/"58-fRBsM5Iaf6Xc/lSlVqIaL39xhzA"
+date: Tue, 01 Jul 2025 20:02:04 GMT
 connection: close
 ###
-PUT http://localhost:3030/users/75231bfb-b1b8-4dff-a561-faafc02070d9
+PUT http://localhost:3030/users/eeb19ff3-e675-4717-a232-2d38433408db
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1MjMxYmZiLWIxYjgtNGRmZi1hNTYxLWZhYWZjMDIwNzBkOSIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxMzE5NTY3LCJleHAiOjE3NTE0MDU5Njd9.Q9ciGrHLoIM5bfFNWD0_gCykpxPnMRcME5FviY4qLDc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVlYjE5ZmYzLWU2NzUtNDcxNy1hMjMyLTJkMzg0MzM0MDhkYiIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxNDAxMDI0LCJleHAiOjE3NTE0ODc0MjR9.eKD7dw8s6h4vpylHYRSNCDls95adQs14Dp7UXX4ztf4
 
 {
-    "name": "Roberto",
-    "role": "admin"
+    "role": "user"
 }
 
-HTTP/1.1 500  - Internal Server Error
+
+HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 52
-etag: W/"34-rlKccw1E+/fV8niQk4oFitDfPro"
-date: Mon, 30 Jun 2025 21:53:00 GMT
+content-length: 259
+etag: W/"103-CZ2qXk0DFhHV8w1DI6339ZIFa2Y"
+date: Tue, 01 Jul 2025 20:18:51 GMT
+connection: close
+###
+DELETE http://localhost:3030/users/eeb19ff3-e675-4717-a232-2d38433408db
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVlYjE5ZmYzLWU2NzUtNDcxNy1hMjMyLTJkMzg0MzM0MDhkYiIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTE0MDEyNDEsImV4cCI6MTc1MTQ4NzY0MX0.lJmYJJAt_uFi6b_ZvzZyxTEoRDXwtebFZ2BdYI242Nc
+
+HTTP/1.1 403  - Forbidden
+x-powered-by: Express
+content-type: application/json; charset=utf-8
+content-length: 93
+etag: W/"5d-Nepxjz5v62nLCKICtqiJeJdJNxE"
+date: Tue, 01 Jul 2025 20:22:31 GMT
 connection: close

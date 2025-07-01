@@ -5,26 +5,31 @@ import {
   Get,
   Param,
   Put,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { Roles } from '../../auth/decorator/roles.decorator';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
-import { CustomRequest, ResponseAPI, UserRole } from '../../types';
+import {
+  CustomRequest,
+  FindUsersQuery,
+  ResponseAPI,
+  UserRole,
+} from '../../types';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { UserService } from '../service/user.service';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
   @Roles(UserRole.ADMIN)
-  async findAll() {
+  async findAll(@Query() query: FindUsersQuery) {
     try {
-      return await this.userService.findAll();
+      return await this.userService.findAll(query);
     } catch (error: any) {
       return {
         success: false,
@@ -72,6 +77,14 @@ export class UserController {
   @Delete(':id')
   @Roles(UserRole.ADMIN)
   remove(@Param('id') id: string) {
-    return this.userService.remove(id);
+    try {
+      return this.userService.remove(id);
+    } catch (error: any) {
+      return {
+        success: false,
+        code: 500,
+        message: `Erro no servidor: ${error.message}`,
+      };
+    }
   }
 }

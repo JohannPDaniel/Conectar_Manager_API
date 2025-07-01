@@ -1,22 +1,68 @@
 import { Injectable } from '@nestjs/common';
+import { Op } from 'sequelize';
 import { AuthUser, UserDto } from '../../auth/dto';
 import { User } from '../../models/user.model';
-import { SessionService } from '../../session/session.service';
-import { ResponseAPI, UserRole } from '../../types';
+import { FindUsersQuery, ResponseAPI, UserRole } from '../../types';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private sessionService: SessionService, // 👈 adicione isso
-  ) {}
+  async findAll({
+    role,
+    sortBy,
+    order,
+    name,
+  }: FindUsersQuery): Promise<ResponseAPI> {
+    const where: any = {};
 
-  async findAll() {
-    const users = await User.findAll();
+    // 🔒 Filtro por role (com tratamento de aspas)
+    if (role) {
+      const normalizedRole = String(role)
+        .trim()
+        .replace(/^"+|"+$/g, '');
+
+      const validRoles = ['admin', 'user'];
+
+      if (!validRoles.includes(normalizedRole)) {
+        return {
+          success: false,
+          code: 400,
+          message: `Valor de role inválido: "${normalizedRole}". Use (admin) ou (user).`,
+        };
+      }
+
+      where.role = normalizedRole;
+    }
+
+    // 🔍 Filtro por nome parcial (case-insensitive)
+    if (name) {
+      where.name = { [Op.iLike]: `%${name}%` };
+    }
+
+    // 🔃 Ordenação dinâmica
+    const allowedSortFields = ['name', 'createdAt'];
+    const validSortBy = allowedSortFields.includes(sortBy || '')
+      ? sortBy
+      : 'createdAt';
+    const validOrder = order?.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
+    if (sortBy && !allowedSortFields.includes(sortBy)) {
+      return {
+        success: false,
+        code: 400,
+        message: `Campo de ordenação inválido: "${sortBy}". Use "name" ou "createdAt".`,
+      };
+    }
+
+    const users = await User.findAll({
+      where,
+      order: [[validSortBy as string, validOrder as string]],
+    });
+
     return {
       success: true,
       code: 200,
-      message: 'Usuários encontrados com sucesso !!!',
+      message: 'Usuários encontrados com sucesso!',
       data: users.map((user) => this.mapToDto(user)),
     };
   }
@@ -80,19 +126,12 @@ export class UserService {
       return {
         success: false,
         code: 403,
-        message: 'Usuários regulares não podem alterar o campo "role".',
+        message: 'Usuários regulares não podem alterar o campo (role).',
       };
     }
 
     if (!isAdmin) {
       delete data.role;
-    }
-
-    const isDowngrading =
-      isAdmin && data.role === UserRole.USER && user.role === UserRole.ADMIN;
-
-    if (isDowngrading) {
-      await this.sessionService.invalidateUserTokens(user.id);
     }
 
     const updatedUser = await user.update(data);
