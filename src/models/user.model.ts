@@ -38,4 +38,7 @@ export class User extends Model<User, CreateUserDto> {
     field: 'updated_at',
   })
   declare updatedAt: Date;
+
+  @Column({ type: DataType.DATE, allowNull: true, field: 'last_login' })
+  declare lastLogin: Date | null;
 }

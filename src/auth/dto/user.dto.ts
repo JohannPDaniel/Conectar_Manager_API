@@ -7,4 +7,5 @@ export class UserDto {
   role!: UserRole;
   createdAt!: Date;
   updatedAt!: Date;
+  lastLogin!: Date | null;
 }

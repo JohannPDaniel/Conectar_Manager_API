@@ -32,21 +32,26 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.NOW,
+        field: 'created_at',
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.NOW,
+        field: 'updated_at',
+      },
+      lastLogin: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        field: 'last_login',
       },
     });
-    await queryInterface.renameColumn('users', 'createdAt', 'created_at');
-    await queryInterface.renameColumn('users', 'updatedAt', 'updated_at');
+    // await queryInterface.renameColumn('users', 'createdAt', 'created_at');
+    // await queryInterface.renameColumn('users', 'updatedAt', 'updated_at');
   },
 
   async down(queryInterface, _Sequelize) {
     await queryInterface.dropTable('users');
-    await queryInterface.renameColumn('users', 'createdAt', 'created_at');
-    await queryInterface.renameColumn('users', 'updatedAt', 'updated_at');
   },
 };

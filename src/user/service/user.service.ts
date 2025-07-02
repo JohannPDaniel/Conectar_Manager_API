@@ -95,6 +95,29 @@ export class UserService {
     };
   }
 
+  async findInactiveUsers(): Promise<ResponseAPI> {
+    const THIRTY_DAYS_AGO = new Date();
+    THIRTY_DAYS_AGO.setDate(THIRTY_DAYS_AGO.getDate() - 30);
+
+    const users = await User.findAll({
+      where: {
+        lastLogin: {
+          [Op.or]: [
+            { [Op.lt]: THIRTY_DAYS_AGO },
+            { [Op.is]: null }, // nunca logaram
+          ],
+        },
+      },
+    });
+
+    return {
+      success: true,
+      code: 200,
+      message: 'Usuários inativos listados com sucesso!',
+      data: users.map((user) => this.mapToDto(user)),
+    };
+  }
+
   async update(
     id: string,
     currentUser: AuthUser,
@@ -166,6 +189,7 @@ export class UserService {
       role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
+      lastLogin: user.lastLogin,
     };
   }
 }

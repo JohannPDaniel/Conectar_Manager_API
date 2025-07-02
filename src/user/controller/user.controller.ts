@@ -39,6 +39,20 @@ export class UserController {
     }
   }
 
+  @Get('inactive')
+  @Roles(UserRole.ADMIN)
+  async findInactive() {
+    try {
+      return await this.userService.findInactiveUsers();
+    } catch (error: any) {
+      return {
+        success: false,
+        code: 500,
+        message: `Erro no servidor: ${error.message}`,
+      };
+    }
+  }
+
   @Get(':id')
   async findOne(
     @Param('id') id: string,

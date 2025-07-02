@@ -60,6 +60,9 @@ export class AuthService {
       };
     }
 
+    user.lastLogin = new Date();
+    await user.save();
+
     const payload: AuthUser = {
       id: user.id,
       name: user.name,
@@ -84,6 +87,7 @@ export class AuthService {
       role: data.role,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
+      lastLogin: data.lastLogin,
     };
   }
 }
