@@ -172,12 +172,12 @@ export class UserService {
     if (!user)
       return { success: false, code: 404, message: 'Usuário não encontrado' };
 
-    const userDestroy = await user.destroy();
+    await user.destroy();
     return {
       success: true,
       code: 200,
       message: 'Usuário removido com sucesso',
-      data: userDestroy,
+      data: this.mapToDto(user),
     };
   }
 
