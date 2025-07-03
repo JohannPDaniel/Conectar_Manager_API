@@ -24,7 +24,7 @@ export class createUserMiddleware implements NestMiddleware {
       return;
     }
 
-    if (!password) {
+    if (password === undefined || password === null) {
       res.status(400).json({
         success: false,
         message: 'O atributo "password" é obrigatório!',
