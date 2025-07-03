@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../../models/user.model';
 import { UserRole } from '../../types/userRoles';
 import { Bcrypt, JWT } from '../../utils';
@@ -7,11 +8,15 @@ import { AuthUser, CreateUserDto, LoginDto, UserDto } from '../dto';
 @Injectable()
 export class AuthService {
   constructor(
+    @InjectModel(User)
+    private readonly userModel: typeof User,
     private readonly bcrypt: Bcrypt,
     private readonly jwt: JWT,
   ) {}
   public async create(data: CreateUserDto) {
-    const existingUser = await User.findOne({ where: { email: data.email } });
+    const existingUser = await this.userModel.findOne({
+      where: { email: data.email },
+    });
 
     if (existingUser) {
       return {
@@ -23,7 +28,7 @@ export class AuthService {
 
     const hashedPassword = await this.bcrypt.generateHash(data.password);
 
-    const user = await User.create({
+    const user = await this.userModel.create({
       name: data.name,
       email: data.email,
       password: hashedPassword,
@@ -39,7 +44,7 @@ export class AuthService {
   }
 
   public async login(data: LoginDto) {
-    const user = await User.findOne({ where: { email: data.email } });
+    const user = await this.userModel.findOne({ where: { email: data.email } });
 
     if (!user) {
       return {

@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ResponseAPI } from '../../types/responseApi';
-import { CreateUserDto, LoginDto } from '../dto';
+import type { CreateUserDto, LoginDto } from '../dto';
 import { AuthService } from '../service/auth.service';
 
 @Controller('auth')

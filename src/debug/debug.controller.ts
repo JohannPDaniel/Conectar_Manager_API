@@ -1,6 +1,6 @@
 // src/debug/debug.controller.ts
 import { Controller, Post, Get, Req } from '@nestjs/common';
-import { Request } from 'express';
+import type { Request } from 'express';
 
 @Controller('debug')
 export class DebugController {
