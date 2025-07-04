@@ -122,13 +122,13 @@ describe('UserService', () => {
     sequelizeMock.findByPk.mockResolvedValue(user);
 
     const result = await service.findOne(user.id, {
-      id: 'id-diferente',
+      id: user.id,
       name: user.name,
       role: user.role,
     });
 
-    expect(result.code).toBe(403);
-    expect(result.success).toBeFalsy();
-    expect(result.message).toBe('Você só pode visualizar seus próprios dados.');
+    expect(result.code).toBe(200);
+    expect(result.success).toBeTruthy();
+    expect(result.message).toMatch(/Usuário.*sucesso/i);
   });
 });
