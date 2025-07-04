@@ -1,6 +1,6 @@
 export interface FindUsersQuery {
   role?: string;
-  sortBy?: 'name' | 'createdAt';
+  sortBy?: string;
   order?: 'asc' | 'desc';
   name: string;
 }

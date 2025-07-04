@@ -9,6 +9,10 @@ describe('UsersMiddleware', () => {
     json: jsonMock,
   }));
 
+  const req = {
+    body: {},
+  } as Request;
+
   const res = {
     status: statusMock,
   } as unknown as Response;
@@ -21,9 +25,8 @@ describe('UsersMiddleware', () => {
 
   it('Deve retornar 400 quando o nome não for fornecido', () => {
     const sut = createSut();
-    const req = {
-      body: { name: '' },
-    } as Request;
+
+    req.body = { name: '' };
 
     sut.use(req, res, next);
 
@@ -53,9 +56,8 @@ describe('UsersMiddleware', () => {
 
   it('Deve retornar 400 quando a senha não for fornecida', () => {
     const sut = createSut();
-    const req = {
-      body: { name: 1, email: 2 },
-    } as Request;
+
+    req.body = { name: 1, email: 2 };
 
     sut.use(req, res, next);
 
@@ -69,9 +71,8 @@ describe('UsersMiddleware', () => {
 
   it('Deve retornar 400 quando a permissão não for fornecida', () => {
     const sut = createSut();
-    const req = {
-      body: { name: 1, email: 2, password: 3 },
-    } as Request;
+
+    req.body = { name: 1, email: 2, password: 3 };
 
     sut.use(req, res, next);
 
@@ -85,9 +86,8 @@ describe('UsersMiddleware', () => {
 
   it('Deve retornar 400 quando o nome for de um tipo diferente de uma string', () => {
     const sut = createSut();
-    const req = {
-      body: { name: 1, email: 2, password: 3, role: 4 },
-    } as Request;
+
+    req.body = { name: 1, email: 2, password: 3, role: 4 };
 
     sut.use(req, res, next);
 
@@ -101,9 +101,8 @@ describe('UsersMiddleware', () => {
 
   it('Deve retornar 400 quando o e-mail for de um tipo diferente de uma string', () => {
     const sut = createSut();
-    const req = {
-      body: { name: '1', email: 2, password: 3, role: 4 },
-    } as Request;
+
+    req.body = { name: '1', email: 2, password: 3, role: 4 };
 
     sut.use(req, res, next);
 
@@ -117,15 +116,103 @@ describe('UsersMiddleware', () => {
 
   it('Deve retornar 400 quando a senha for de um tipo diferente de uma string', () => {
     const sut = createSut();
-    const req = {
-      body: { name: '1', email: '2', password: 3, role: 4 },
-    } as Request;
+
+    req.body = { name: '1', email: '2', password: 3, role: 4 };
 
     sut.use(req, res, next);
 
     expect(statusMock).toHaveBeenCalledWith(400);
     expect(jsonMock).toHaveBeenCalledWith({
       message: 'O atributo "senha" deve ser um texto!',
+      success: false,
+    });
+
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('Deve retornar 400 quando a permissão for de um tipo diferente de uma string', () => {
+    const sut = createSut();
+
+    req.body = { name: '1', email: '2', password: '3', role: 4 };
+
+    sut.use(req, res, next);
+
+    expect(statusMock).toHaveBeenCalledWith(400);
+    expect(jsonMock).toHaveBeenCalledWith({
+      message: 'O atributo "permissão" deve ser do tipo (ADMIN) ou (USER)',
+      success: false,
+    });
+
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('Deve retornar 400 quando o nome tiver menos que 4 caracteres', () => {
+    const sut = createSut();
+
+    req.body = { name: 'abc', email: '2', password: '3', role: 'user' };
+
+    sut.use(req, res, next);
+
+    expect(statusMock).toHaveBeenCalledWith(400);
+    expect(jsonMock).toHaveBeenCalledWith({
+      message: 'O atributo "name" deve ter no mínimo 4 caracteres !!!',
+      success: false,
+    });
+  });
+
+  it('Deve retornar 400 quando o nome tiver menos que 4 caracteres', () => {
+    const sut = createSut();
+
+    req.body = { name: 'abc', email: '2', password: '3', role: 'user' };
+
+    sut.use(req, res, next);
+
+    expect(statusMock).toHaveBeenCalledWith(400);
+    expect(jsonMock).toHaveBeenCalledWith({
+      message: 'O atributo "name" deve ter no mínimo 4 caracteres !!!',
+      success: false,
+    });
+
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('Deve retornar 400 quando o e-mail não estiver escrito em formato de e-mail: ****@****.com', () => {
+    const sut = createSut();
+
+    req.body = {
+      name: 'Johann',
+      email: 'ab@ab.com',
+      password: '3',
+      role: 'user',
+    };
+
+    sut.use(req, res, next);
+
+    expect(statusMock).toHaveBeenCalledWith(400);
+    expect(jsonMock).toHaveBeenCalledWith({
+      message:
+        'O e-mail informado deve estar em um formato de E-mail ****@****.com',
+      success: false,
+    });
+
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('Deve retornar 400 quando a senha tiver menos que 4 caracteres', () => {
+    const sut = createSut();
+
+    req.body = {
+      name: 'Johann',
+      email: 'abcd@email.com',
+      password: 'abc',
+      role: 'user',
+    };
+
+    sut.use(req, res, next);
+
+    expect(statusMock).toHaveBeenCalledWith(400);
+    expect(jsonMock).toHaveBeenCalledWith({
+      message: 'O atributo "senha" ter no mínimo 4 caracteres!',
       success: false,
     });
 

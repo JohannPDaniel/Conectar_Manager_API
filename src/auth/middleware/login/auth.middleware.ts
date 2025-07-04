@@ -29,14 +29,6 @@ export class AuthMiddleware implements NestMiddleware {
 
     const token = parts[1];
 
-    if (!token) {
-      res.status(401).json({
-        success: false,
-        message: 'Token inválido!',
-      });
-      return;
-    }
-
     const userDecode = this.jwt.verifyToken(token);
 
     if (!userDecode) {

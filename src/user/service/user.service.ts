@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { AuthUser, UserDto } from '../../auth/dto';
 import { User } from '../../models/user.model';
@@ -7,6 +8,10 @@ import { UpdateUserDto } from '../dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
+  constructor(
+    @InjectModel(User)
+    private readonly userModel: typeof User,
+  ) {}
   async findAll({
     role,
     sortBy,
@@ -54,7 +59,7 @@ export class UserService {
       };
     }
 
-    const users = await User.findAll({
+    const users = await this.userModel.findAll({
       where,
       order: [[validSortBy as string, validOrder as string]],
     });
@@ -67,8 +72,31 @@ export class UserService {
     };
   }
 
+  async findInactiveUsers(): Promise<ResponseAPI> {
+    const THIRTY_DAYS_AGO = new Date();
+    THIRTY_DAYS_AGO.setDate(THIRTY_DAYS_AGO.getDate() - 30);
+
+    const users = await this.userModel.findAll({
+      where: {
+        lastLogin: {
+          [Op.or]: [
+            { [Op.lt]: THIRTY_DAYS_AGO },
+            { [Op.is]: null }, // nunca logaram
+          ],
+        },
+      },
+    });
+
+    return {
+      success: true,
+      code: 200,
+      message: 'Usuários inativos listados com sucesso!',
+      data: users.map((user) => this.mapToDto(user)),
+    };
+  }
+
   async findOne(id: string, currentUser: AuthUser): Promise<ResponseAPI> {
-    const user = await User.findByPk(id);
+    const user = await this.userModel.findByPk(id);
 
     if (!user) {
       return {
@@ -95,35 +123,12 @@ export class UserService {
     };
   }
 
-  async findInactiveUsers(): Promise<ResponseAPI> {
-    const THIRTY_DAYS_AGO = new Date();
-    THIRTY_DAYS_AGO.setDate(THIRTY_DAYS_AGO.getDate() - 30);
-
-    const users = await User.findAll({
-      where: {
-        lastLogin: {
-          [Op.or]: [
-            { [Op.lt]: THIRTY_DAYS_AGO },
-            { [Op.is]: null }, // nunca logaram
-          ],
-        },
-      },
-    });
-
-    return {
-      success: true,
-      code: 200,
-      message: 'Usuários inativos listados com sucesso!',
-      data: users.map((user) => this.mapToDto(user)),
-    };
-  }
-
   async update(
     id: string,
     currentUser: AuthUser,
     data: UpdateUserDto,
   ): Promise<ResponseAPI> {
-    const user = await User.findByPk(id);
+    const user = await this.userModel.findByPk(id);
 
     if (!user) {
       return {
@@ -168,7 +173,7 @@ export class UserService {
   }
 
   async remove(id: string): Promise<ResponseAPI> {
-    const user = await User.findByPk(id);
+    const user = await this.userModel.findByPk(id);
     if (!user)
       return { success: false, code: 404, message: 'Usuário não encontrado' };
 

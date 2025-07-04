@@ -6,7 +6,7 @@ import { UserRole } from '../../../types/userRoles';
 export class createUserMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const { name, email, password, role } = req.body;
-    const emailRegex = /^[^\s@]{3,}@[^\s@]{3,}\.com$/;
+    const emailRegex = /^[^\s@]{4,}@[^\s@]{3,}\.com$/;
 
     if (!name) {
       res.status(400).json({
@@ -24,7 +24,7 @@ export class createUserMiddleware implements NestMiddleware {
       return;
     }
 
-    if (password === undefined || password === null) {
+    if (!password) {
       res.status(400).json({
         success: false,
         message: 'O atributo "password" é obrigatório!',
@@ -89,7 +89,7 @@ export class createUserMiddleware implements NestMiddleware {
       return;
     }
 
-    if (password && password.length < 4) {
+    if (password.length < 4) {
       res.status(400).json({
         success: false,
         message: 'O atributo "senha" ter no mínimo 4 caracteres!',

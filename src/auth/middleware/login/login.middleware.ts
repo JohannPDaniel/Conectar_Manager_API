@@ -4,9 +4,6 @@ import { NextFunction, Request, Response } from 'express';
 @Injectable()
 export class LoginMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    if (req.method !== 'POST' || !req.originalUrl.startsWith('/auth/login')) {
-      return next();
-    }
     const { email, password } = req.body;
     const emailRegex = /^[^\s@]{3,}@[^\s@]{3,}\.com$/;
 
