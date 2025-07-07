@@ -175,7 +175,11 @@ export class UserService {
   async remove(id: string): Promise<ResponseAPI> {
     const user = await this.userModel.findByPk(id);
     if (!user)
-      return { success: false, code: 404, message: 'Usuário não encontrado' };
+      return {
+        success: false,
+        code: 404,
+        message: 'Usuário não encontrado',
+      };
 
     await user.destroy();
     return {
