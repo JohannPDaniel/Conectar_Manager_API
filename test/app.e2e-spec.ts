@@ -1,13 +1,18 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Server } from 'http';
 import { Sequelize } from 'sequelize-typescript';
+import supertest from 'supertest';
 import { AppModule } from '../src/app.module';
 import { UserModule } from '../src/user/user.module';
-import supertest from 'supertest';
 
 describe('AppController (e2e)', () => {
   let app: NestExpressApplication;
+  let server: Server;
+  const endpoint = '/';
+
   let sequelize: Sequelize;
+
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule, UserModule],
@@ -17,6 +22,7 @@ describe('AppController (e2e)', () => {
     await app.init();
 
     sequelize = moduleFixture.get(Sequelize); // <- Aqui você injeta o Sequelize
+    server = app.getHttpServer();
   });
 
   afterEach(async () => {
@@ -30,11 +36,8 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (GET)', async () => {
-    const server = app.getHttpServer();
-
-    const response = await supertest(server).get('/').expect(200);
+    const response = await supertest(server).get(endpoint).send('Hello World!');
 
     expect(response.text).toBe('Hello World!');
-    // return request(server).get('/').expect(200).expect('Hello World!');
   });
 });

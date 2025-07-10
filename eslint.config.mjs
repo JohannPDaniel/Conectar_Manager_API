@@ -36,6 +36,9 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-member-access': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
+      'no-unused-vars': 'off',
+      'unused-imports/no-unused-imports': 'off',
+      'unused-imports/no-unused-vars': 'off',
     },
   },
 );
