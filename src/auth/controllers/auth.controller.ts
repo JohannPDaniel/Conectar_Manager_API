@@ -18,14 +18,11 @@ export class AuthController {
     try {
       return await this.authService.create(body);
     } catch (error: any) {
-      throw new HttpException(
-        {
-          success: false,
-          code: 500,
-          message: `Erro no servidor: ${error.message}`,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      return {
+        success: false,
+        code: 500,
+        message: `Erro no servidor: ${error.message}`,
+      };
     }
   }
 
@@ -34,14 +31,11 @@ export class AuthController {
     try {
       return await this.authService.login(body);
     } catch (error: any) {
-      throw new HttpException(
-        {
-          success: false,
-          code: 500,
-          message: `Erro no servidor: ${error.message}`,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      return {
+        success: false,
+        code: 500,
+        message: `Erro no servidor: ${error.message}`,
+      };
     }
   }
 }

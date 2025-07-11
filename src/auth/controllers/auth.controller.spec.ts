@@ -57,11 +57,7 @@ describe('AuthController', () => {
       email: 'johann@email.com',
     });
 
-    sequelizeMock.create.mockRejectedValue({
-      success: false,
-      code: 500,
-      message: 'Erro no servidor:',
-    });
+    sequelizeMock.create.mockRejectedValue(new Error('Erro no servidor'));
 
     const result = await controller.create({
       name: mockUser.name,

@@ -11,7 +11,7 @@ import { AuthService } from './service/auth.service';
   imports: [SequelizeModule.forFeature([User])],
   controllers: [AuthController],
   providers: [AuthService, JWT, Bcrypt],
-  exports: [AuthService, JWT, Bcrypt],
+  exports: [JWT],
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -3,10 +3,11 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Server } from 'http';
 import supertest from 'supertest';
-import { AuthModule } from '../src/auth/auth.module';
-import { UserDto } from '../src/auth/dto';
-import { AuthService } from '../src/auth/service/auth.service';
-import { User } from '../src/models/user.model';
+import { AuthModule } from '../../src/auth/auth.module';
+import { UserDto } from '../../src/auth/dto';
+import { AuthService } from '../../src/auth/service/auth.service';
+import { DatabaseModule } from '../../src/database/database.module';
+import { User } from '../../src/models/user.model';
 
 describe('AuthController (e2e) - /auth/register', () => {
   let app: NestExpressApplication;
@@ -15,17 +16,7 @@ describe('AuthController (e2e) - /auth/register', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        SequelizeModule.forRoot({
-          dialect: 'postgres',
-          uri: process.env.DATABASE_URL,
-          autoLoadModels: true,
-          synchronize: true,
-          logging: false, // desativa logs no teste
-        }),
-        SequelizeModule.forFeature([User]),
-        AuthModule,
-      ],
+      imports: [DatabaseModule, SequelizeModule.forFeature([User]), AuthModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -190,7 +181,7 @@ describe('AuthController (e2e) - /auth/register', () => {
 
     const response = await supertest(server).post(endpoint).send(body);
 
-    expect(response.status).toBe(500);
+    expect(response.body.code).toBe(500);
     expect(response.body.success).toBeFalsy();
     expect(response.body.message).toMatch(/Erro.*servidor/i);
   });

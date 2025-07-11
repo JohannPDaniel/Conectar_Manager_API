@@ -1,7 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
-@Injectable()
 export class LoginMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
@@ -36,7 +35,7 @@ export class LoginMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo (senha) de vir em formato de texto !!!',
       });
-      return false;
+      return;
     }
 
     if (!emailRegex.test(email)) {
@@ -45,7 +44,7 @@ export class LoginMiddleware implements NestMiddleware {
         message:
           'O e-mail informado deve estar em um formato de E-mail ****@****.com',
       });
-      return false;
+      return;
     }
 
     if (password.length < 4) {
@@ -53,7 +52,7 @@ export class LoginMiddleware implements NestMiddleware {
         success: false,
         message: 'O atributo (senha) deve ter no mínimo 4 caracteres !!!',
       });
-      return false;
+      return;
     }
     return next();
   }

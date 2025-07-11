@@ -2,8 +2,8 @@ POST http://localhost:3030/auth/register
 Content-Type: application/json
 
 {
-    "name": "Leandro",
-    "email": "wcxr@email.com",
+    "name": "Roberto",
+    "email": "abca@email.com",
     "password": "senha123",
     "role": "user"
 }
@@ -11,63 +11,63 @@ Content-Type: application/json
 HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 255
-etag: W/"ff-fW5SjOy7npGCo+zwB1lpnu9HiMw"
-date: Wed, 02 Jul 2025 18:57:56 GMT
+content-length: 272
+etag: W/"110-xddveb8Tsc4b2Q0fpZLZBl7/h1A"
+date: Fri, 11 Jul 2025 19:56:27 GMT
 connection: close
 ###
 POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-    "email": "abcd@email.com",
+    "email": "abca@email.com",
     "password": "senha123"
 }
 
-HTTP/1.1 200  - OK
+HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
 content-length: 318
-etag: W/"13e-hHEFYyGwfM3HNrkBgR1lcK3brgY"
-date: Wed, 02 Jul 2025 19:27:16 GMT
+etag: W/"13e-mUopAgIGgVDcmA9n4ZrcerAPTJ0"
+date: Fri, 11 Jul 2025 20:01:00 GMT
 connection: close
 ###
 GET http://localhost:3030/users?order=asc
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3ODg0ZWQ2LWU2ODUtNDk0Yi04YjlkLTY0YTZiNGU5YWJlNiIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTE0ODM1NjQsImV4cCI6MTc1MTU2OTk2NH0.x4ug2yWQQ3ptPjzQX0gBbUJCM0weV_uUXvXI8ZoJDLw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2ZGZlNTEzLWNmNTctNGJkNS1iZmI3LTg0MGFlZjA1NDNlYyIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTIyNjMyMDksImV4cCI6MTc1MjM0OTYwOX0.DJCJyuOSPgr8jzAlU19m6Zu7Gv_1tN6HhE-PnX1tqAs
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 720
-etag: W/"2d0-1zgISmUdilZsAzWV65+dTCllol4"
-date: Wed, 02 Jul 2025 19:44:57 GMT
+content-length: 522
+etag: W/"20a-s9iPdOF+MFvh8+HxyYF2S1Q5Mao"
+date: Fri, 11 Jul 2025 19:58:09 GMT
 connection: close
 ###
-GET http://localhost:3030/users/eeb19ff3-e675-4717-a232-2d38433408db
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUwN2EzZWU2LTUwMDYtNGMyNy05ZTJkLThlMGE1ODQxMzQxOSIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTE0MDA4MTIsImV4cCI6MTc1MTQ4NzIxMn0.dQUwcu1NBrCjs3maejv5IYbo2W-PLIPyXxI3I9_SB74
+GET http://localhost:3030/users/56dfe513-cf57-4bd5-bfb7-840aef0543ec
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2ZGZlNTEzLWNmNTctNGJkNS1iZmI3LTg0MGFlZjA1NDNlYyIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTIyNjMyMDksImV4cCI6MTc1MjM0OTYwOX0.DJCJyuOSPgr8jzAlU19m6Zu7Gv_1tN6HhE-PnX1tqAs
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 88
-etag: W/"58-fRBsM5Iaf6Xc/lSlVqIaL39xhzA"
-date: Tue, 01 Jul 2025 20:02:04 GMT
+content-length: 310
+etag: W/"136-UZzXrK/RHYc7wNK1oObk++ga2BE"
+date: Fri, 11 Jul 2025 19:47:39 GMT
 connection: close
 ###
 GET http://localhost:3030/users/inactive
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3ODg0ZWQ2LWU2ODUtNDk0Yi04YjlkLTY0YTZiNGU5YWJlNiIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTE0ODM1NjQsImV4cCI6MTc1MTU2OTk2NH0.x4ug2yWQQ3ptPjzQX0gBbUJCM0weV_uUXvXI8ZoJDLw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2ZGZlNTEzLWNmNTctNGJkNS1iZmI3LTg0MGFlZjA1NDNlYyIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTIyNjMyMDksImV4cCI6MTc1MjM0OTYwOX0.DJCJyuOSPgr8jzAlU19m6Zu7Gv_1tN6HhE-PnX1tqAs
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 287
-etag: W/"11f-+QMMB84h1k/2QcKusFHe/pwgW00"
-date: Wed, 02 Jul 2025 19:44:27 GMT
+content-length: 90
+etag: W/"5a-gTNUL9PP7H5I2b4XU8UIXv59d84"
+date: Fri, 11 Jul 2025 19:47:59 GMT
 connection: close
 ###
-PUT http://localhost:3030/users/eeb19ff3-e675-4717-a232-2d38433408db
+PUT http://localhost:3030/users/5fdc3ddc-11a0-47d9-8bbb-586763c319e5
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVlYjE5ZmYzLWU2NzUtNDcxNy1hMjMyLTJkMzg0MzM0MDhkYiIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUxNDAxMDI0LCJleHAiOjE3NTE0ODc0MjR9.eKD7dw8s6h4vpylHYRSNCDls95adQs14Dp7UXX4ztf4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGMzZGRjLTExYTAtNDdkOS04YmJiLTU4Njc2M2MzMTllNSIsIm5hbWUiOiJSb2JlcnRvIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTIyNjMzMzQsImV4cCI6MTc1MjM0OTczNH0.cHTFqaoa_A7asFmy2RdTiEsrIjJglN3_Uc-UP7mWI00
 
 {
     "role": "user"
@@ -76,18 +76,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVlYjE5ZmYzL
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 259
-etag: W/"103-CZ2qXk0DFhHV8w1DI6339ZIFa2Y"
-date: Tue, 01 Jul 2025 20:18:51 GMT
+content-length: 95
+etag: W/"5f-nvPMQ0Y+3jtqsuQzSW4Ck3xpg64"
+date: Fri, 11 Jul 2025 19:49:57 GMT
 connection: close
 ###
-DELETE http://localhost:3030/users/78a2de97-aeba-48b1-b388-c3a0737a5fc2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3ODg0ZWQ2LWU2ODUtNDk0Yi04YjlkLTY0YTZiNGU5YWJlNiIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTE0ODM1NjQsImV4cCI6MTc1MTU2OTk2NH0.x4ug2yWQQ3ptPjzQX0gBbUJCM0weV_uUXvXI8ZoJDLw
+DELETE http://localhost:3030/users/5fdc3ddc-11a0-47d9-8bbb-586763c319e5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2ZGZlNTEzLWNmNTctNGJkNS1iZmI3LTg0MGFlZjA1NDNlYyIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTIyNjMyMDksImV4cCI6MTc1MjM0OTYwOX0.DJCJyuOSPgr8jzAlU19m6Zu7Gv_1tN6HhE-PnX1tqAs
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 274
-etag: W/"112-YzpL/PyCmLA6WnjlvsIzmsEoEbw"
-date: Wed, 02 Jul 2025 19:46:03 GMT
+content-length: 295
+etag: W/"127-Peh+EjBZV+LqZscWh/iVBYTs/7c"
+date: Fri, 11 Jul 2025 19:51:16 GMT
 connection: close
