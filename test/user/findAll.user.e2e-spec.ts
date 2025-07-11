@@ -6,6 +6,7 @@ import supertest from 'supertest';
 import { AuthModule } from '../../src/auth/auth.module';
 import { DatabaseModule } from '../../src/database/database.module';
 import { User } from '../../src/models/user.model';
+import { UserService } from '../../src/user/service/user.service';
 
 describe('UserController (e2e) /users', () => {
   let app: NestExpressApplication;
@@ -33,10 +34,20 @@ describe('UserController (e2e) /users', () => {
     const sortBy = 'name' as 'name' | 'createdAt';
     const order = 'ASC' as 'ASC' | 'DESC';
 
+    jest.spyOn(UserService.prototype, 'findAll').mockResolvedValue({
+      success: true,
+      code: 200,
+      message: 'Usuários buscados com sucesso!',
+      data: {},
+    });
+
     const response = await supertest(server)
       .get(
         `${endpoint}?role=${role}&name=${name}&sortBy=${sortBy}&order=${order}`,
       )
       .set('Authorization', `Bearer ${token}`);
+    console.log('response:', response.body);
+
+    expect(response.body.code).toBe(200);
   });
 });

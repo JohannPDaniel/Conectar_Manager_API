@@ -54,7 +54,7 @@ describe('UserController', () => {
     sequelizeMock.findAll.mockResolvedValue({
       success: true,
       code: 200,
-      message: 'Usuários encontrados com sucesso!',
+      message: 'Usuários buscados com sucesso!',
       data: [mockUser],
     });
 
