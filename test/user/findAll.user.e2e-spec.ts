@@ -3,19 +3,22 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Server } from 'http';
 import supertest from 'supertest';
-import { AuthModule } from '../../src/auth/auth.module';
-import { DatabaseModule } from '../../src/database/database.module';
-import { User } from '../../src/models/user.model';
-import { UserService } from '../../src/user/service/user.service';
+import { DatabaseModule } from '../../src/config/database/database.module';
+import { User } from '../../src/config/models/user.model';
+import { AuthUser } from '../../src/modules/auth/dto';
+import { UserService } from '../../src/modules/user/service/user.service';
+import { UserModule } from '../../src/modules/user/user.module';
+import { makeToken } from '../makeToken';
 
 describe('UserController (e2e) /users', () => {
   let app: NestExpressApplication;
   let server: Server;
   const endpoint = '/users';
+  let token: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [DatabaseModule, SequelizeModule.forFeature([User]), AuthModule],
+      imports: [DatabaseModule, SequelizeModule.forFeature([User]), UserModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -28,11 +31,16 @@ describe('UserController (e2e) /users', () => {
   });
 
   it('Deve retornar os usuários buscados quando fornecido uma consulta válida', async () => {
-    const token = 'any_token';
-    const role = 'user' as 'user' | 'admin';
-    const name = 'Johann';
-    const sortBy = 'name' as 'name' | 'createdAt';
-    const order = 'ASC' as 'ASC' | 'DESC';
+    token = makeToken({ role: 'admin' } as AuthUser);
+
+    const query = {
+      role: 'admin' as 'admin' | 'user',
+      name: 'Johann',
+      sortBy: 'name' as 'name' | 'createdAt',
+      order: 'ASC' as 'ASC' | 'DESC',
+    };
+
+    const { role, name, sortBy, order } = query;
 
     jest.spyOn(UserService.prototype, 'findAll').mockResolvedValue({
       success: true,
@@ -46,8 +54,9 @@ describe('UserController (e2e) /users', () => {
         `${endpoint}?role=${role}&name=${name}&sortBy=${sortBy}&order=${order}`,
       )
       .set('Authorization', `Bearer ${token}`);
-    console.log('response:', response.body);
 
     expect(response.body.code).toBe(200);
+    expect(response.body.success).toBeTruthy();
+    expect(response.body.message).toMatch(/Usuários.*sucesso/i);
   });
 });

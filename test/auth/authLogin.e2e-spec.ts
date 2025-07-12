@@ -3,10 +3,10 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Server } from 'http';
 import supertest from 'supertest';
-import { AuthModule } from '../../src/auth/auth.module';
-import { AuthService } from '../../src/auth/service/auth.service';
-import { DatabaseModule } from '../../src/database/database.module';
-import { User } from '../../src/models/user.model';
+import { DatabaseModule } from '../../src/config/database/database.module';
+import { User } from '../../src/config/models/user.model';
+import { AuthModule } from '../../src/modules/auth/auth.module';
+import { AuthService } from '../../src/modules/auth/service/auth.service';
 
 describe('AuthController (e2e) - /auth/login', () => {
   let app: NestExpressApplication;

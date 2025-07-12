@@ -4,7 +4,7 @@ import { Server } from 'http';
 import { Sequelize } from 'sequelize-typescript';
 import supertest from 'supertest';
 import { AppModule } from '../src/app.module';
-import { UserModule } from '../src/user/user.module';
+import { UserModule } from '../src/modules/user/user.module';
 
 describe('AppController (e2e)', () => {
   let app: NestExpressApplication;
