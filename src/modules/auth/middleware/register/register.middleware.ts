@@ -1,6 +1,6 @@
 import { NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { UserRole } from '../../../../types';
+import { UserRole } from '../../../../config/types';
 
 export class createUserMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {

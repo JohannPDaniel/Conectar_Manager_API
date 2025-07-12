@@ -2,8 +2,8 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './config/database/database.module';
+import { MiddlewareConfig } from './middleware.config';
 import { AuthModule } from './modules/auth/auth.module';
-import { MiddlewareConfig } from './modules/auth/middleware/middleware.config';
 import { DebugModule } from './modules/debug/debug.module';
 import { UserModule } from './modules/user/user.module';
 

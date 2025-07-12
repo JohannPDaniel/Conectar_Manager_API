@@ -2,9 +2,9 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from '../../config/models/user.model';
-import { Bcrypt, JWT } from '../../utils';
+import { Bcrypt, JWT } from '../../config/utils';
+import { MiddlewareConfig } from '../../middleware.config';
 import { AuthController } from './controllers/auth.controller';
-import { MiddlewareConfig } from './middleware/middleware.config';
 import { AuthService } from './service/auth.service';
 
 @Module({

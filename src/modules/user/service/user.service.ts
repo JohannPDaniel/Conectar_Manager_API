@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { User } from '../../../config/models/user.model';
-import { FindUsersQuery, ResponseAPI, UserRole } from '../../../types';
+import { FindUsersQuery, ResponseAPI, UserRole } from '../../../config/types';
 import { AuthUser, UserDto } from '../../auth/dto';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 
@@ -97,6 +97,7 @@ export class UserService {
 
   async findOne(id: string, currentUser: AuthUser): Promise<ResponseAPI> {
     const user = await this.userModel.findByPk(id);
+    const role = currentUser.role as UserRole;
 
     if (!user) {
       return {
@@ -107,7 +108,7 @@ export class UserService {
     }
 
     // Regra de negócio: só ADMIN ou o próprio usuário pode acessar
-    if (currentUser.role !== UserRole.ADMIN && currentUser.id !== user.id) {
+    if (role !== UserRole.ADMIN && currentUser.id !== user.id) {
       return {
         success: false,
         code: 403,
@@ -138,7 +139,7 @@ export class UserService {
       };
     }
 
-    const isAdmin = currentUser.role === UserRole.ADMIN;
+    const isAdmin = (currentUser.role as UserRole) === UserRole.ADMIN;
     const isSelf = currentUser.id === user.id;
 
     if (!isAdmin && !isSelf) {

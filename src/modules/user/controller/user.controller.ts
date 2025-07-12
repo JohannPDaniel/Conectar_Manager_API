@@ -12,11 +12,11 @@ import {
 import { Roles } from '../../../config/decorator/roles.decorator';
 import { RolesGuard } from '../../../config/guards/roles.guard';
 import {
-  UserRole,
   type CustomRequest,
   type FindUsersQuery,
-  type ResponseAPI,
-} from '../../../types';
+  ResponseAPI,
+  UserRole,
+} from '../../../config/types';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { UserService } from '../service/user.service';
 

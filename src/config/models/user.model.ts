@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 import { CreateUserDto } from '../../modules/auth/dto';
-import { UserRole } from '../../types/userRoles';
+import { UserRole } from '../types';
 
 @Table({ tableName: 'users', timestamps: true })
 export class User extends Model<User, CreateUserDto> {

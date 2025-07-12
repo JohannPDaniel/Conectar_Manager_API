@@ -20,7 +20,7 @@ POST http://localhost:3030/auth/login
 Content-Type: application/json
 
 {
-    "email": "abca@email.com",
+    "email": "email@email.com",
     "password": "senha123"
 }
 
@@ -28,19 +28,19 @@ HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
 content-length: 318
-etag: W/"13e-mUopAgIGgVDcmA9n4ZrcerAPTJ0"
-date: Fri, 11 Jul 2025 20:01:00 GMT
+etag: W/"13e-OydWBzx1Rno2D/SpKxoElMPVYg4"
+date: Sat, 12 Jul 2025 21:28:37 GMT
 connection: close
 ###
-GET http://localhost:3030/users?order=asc
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2ZGZlNTEzLWNmNTctNGJkNS1iZmI3LTg0MGFlZjA1NDNlYyIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTIyNjMyMDksImV4cCI6MTc1MjM0OTYwOX0.DJCJyuOSPgr8jzAlU19m6Zu7Gv_1tN6HhE-PnX1tqAs
+GET http://localhost:3030/users?role=admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU2ZGZlNTEzLWNmNTctNGJkNS1iZmI3LTg0MGFlZjA1NDNlYyIsIm5hbWUiOiJKb2hhbm4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTIzNTU3MTcsImV4cCI6MTc1MjQ0MjExN30.N3RSV9tA9oIHbT3dxNFz0ASJvsaRVWd-HB0dPcQVPsY
 
 HTTP/1.1 200  - OK
 x-powered-by: Express
 content-type: application/json; charset=utf-8
-content-length: 522
-etag: W/"20a-s9iPdOF+MFvh8+HxyYF2S1Q5Mao"
-date: Fri, 11 Jul 2025 19:58:09 GMT
+content-length: 300
+etag: W/"12c-JwxkkFONywttizeoeYF8UuwA9qA"
+date: Sat, 12 Jul 2025 21:28:53 GMT
 connection: close
 ###
 GET http://localhost:3030/users/56dfe513-cf57-4bd5-bfb7-840aef0543ec

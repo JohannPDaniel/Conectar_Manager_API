@@ -2,8 +2,8 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { RolesGuard } from '../../config/guards/roles.guard';
 import { User } from '../../config/models/user.model';
+import { MiddlewareConfig } from '../../middleware.config';
 import { AuthModule } from '../auth/auth.module';
-import { MiddlewareConfig } from '../auth/middleware/middleware.config';
 import { UserController } from './controller/user.controller';
 import { UserService } from './service/user.service';
 
