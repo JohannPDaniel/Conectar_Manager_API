@@ -1,12 +1,12 @@
+import { DatabaseModule } from '@/config/database/database.module';
+import { User } from '@/config/models/user.model';
+import { AuthModule } from '@/modules/auth/auth.module';
+import { AuthService } from '@/modules/auth/service/auth.service';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Server } from 'http';
 import supertest from 'supertest';
-import { DatabaseModule } from '../../src/config/database/database.module';
-import { User } from '../../src/config/models/user.model';
-import { AuthModule } from '../../src/modules/auth/auth.module';
-import { AuthService } from '../../src/modules/auth/service/auth.service';
 
 describe('AuthController (e2e) - /auth/login', () => {
   let app: NestExpressApplication;

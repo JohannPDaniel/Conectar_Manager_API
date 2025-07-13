@@ -1,4 +1,4 @@
-import { UserRole } from '../../../config/types';
+import { UserRole } from '@/config/types';
 
 export interface AuthUser {
   id: string;

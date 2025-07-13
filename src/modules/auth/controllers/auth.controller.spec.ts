@@ -1,5 +1,5 @@
+import { UserMock } from '@/config/mock/user.mock';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserMock } from '../../../config/mock/user.mock';
 import { AuthService } from '../service/auth.service';
 import { AuthController } from './auth.controller';
 

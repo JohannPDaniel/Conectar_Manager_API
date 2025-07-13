@@ -1,8 +1,8 @@
+import { RolesGuard } from '@/config/guards/roles.guard';
+import { UserMock } from '@/config/mock/user.mock';
+import { CustomRequest } from '@/config/types';
 import { CanActivate } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { RolesGuard } from '../../../config/guards/roles.guard';
-import { UserMock } from '../../../config/mock/user.mock';
-import { CustomRequest } from '../../../config/types';
 import { UserService } from '../service/user.service';
 import { UserController } from './user.controller';
 

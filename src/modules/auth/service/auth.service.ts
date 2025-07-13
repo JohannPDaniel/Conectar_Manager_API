@@ -1,8 +1,8 @@
+import { User } from '@/config/models/user.model';
+import { UserRole } from '@/config/types';
+import { Bcrypt, JWT } from '@/config/utils';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from '../../../config/models/user.model';
-import { UserRole } from '../../../config/types';
-import { Bcrypt, JWT } from '../../../config/utils';
 import { AuthUser, CreateUserDto, LoginDto, UserDto } from '../dto';
 
 @Injectable()

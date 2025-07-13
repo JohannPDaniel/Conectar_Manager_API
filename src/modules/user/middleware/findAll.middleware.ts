@@ -1,11 +1,11 @@
 import { NestMiddleware } from '@nestjs/common';
 import { NextFunction, Response } from 'express';
-import { CustomRequest, UserRole } from '../../../config/types';
+import { CustomRequest, UserRole } from '@/config/types';
 
 export class FindAllMiddleware implements NestMiddleware {
   use(req: CustomRequest, res: Response, next: NextFunction) {
     const { role, sortBy, order, name } = req.query;
-    const userRole = req.user.role as UserRole;
+    const userRole = req.user.role;
 
     if (userRole === UserRole.ADMIN) {
       if (role && typeof role !== 'string') {

@@ -1,3 +1,11 @@
+import { Roles } from '@/config/decorator/roles.decorator';
+import { RolesGuard } from '@/config/guards/roles.guard';
+import {
+  type CustomRequest,
+  type FindUsersQuery,
+  ResponseAPI,
+  UserRole,
+} from '@/config/types';
 import {
   Body,
   Controller,
@@ -9,14 +17,6 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { Roles } from '../../../config/decorator/roles.decorator';
-import { RolesGuard } from '../../../config/guards/roles.guard';
-import {
-  type CustomRequest,
-  type FindUsersQuery,
-  ResponseAPI,
-  UserRole,
-} from '../../../config/types';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { UserService } from '../service/user.service';
 

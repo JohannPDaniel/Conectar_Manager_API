@@ -1,13 +1,13 @@
+import { DatabaseModule } from '@/config/database/database.module';
+import { User } from '@/config/models/user.model';
+import { AuthUser } from '@/modules/auth/dto';
+import { UserService } from '@/modules/user/service/user.service';
+import { UserModule } from '@/modules/user/user.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Server } from 'http';
 import supertest from 'supertest';
-import { DatabaseModule } from '../../src/config/database/database.module';
-import { User } from '../../src/config/models/user.model';
-import { AuthUser } from '../../src/modules/auth/dto';
-import { UserService } from '../../src/modules/user/service/user.service';
-import { UserModule } from '../../src/modules/user/user.module';
 import { makeToken } from '../makeToken';
 
 describe('UserController (e2e) /users', () => {

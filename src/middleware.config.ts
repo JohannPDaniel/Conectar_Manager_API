@@ -1,6 +1,8 @@
 import { MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { AuthMiddleware } from './modules/auth/middleware/login/auth.middleware';
-import { LoginMiddleware } from './modules/auth/middleware/login/login.middleware';
+import {
+  AuthMiddleware,
+  LoginMiddleware,
+} from './modules/auth/middleware/login';
 import { createUserMiddleware } from './modules/auth/middleware/register/register.middleware';
 import { FindAllMiddleware } from './modules/user/middleware/findAll.middleware';
 
