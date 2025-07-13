@@ -1,6 +1,6 @@
 import { NextFunction, Response } from 'express';
+import { CustomRequest } from '../../../../config/types';
 import { JWT } from '../../../../config/utils';
-import { CustomRequest } from '../../../../types';
 import { AuthMiddleware } from './auth.middleware';
 
 describe('AuthMiddleware', () => {

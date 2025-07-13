@@ -1,4 +1,4 @@
-import { UserRole } from '../../../types';
+import { UserRole } from '../../../config/types';
 
 export class CreateUserDto {
   name!: string;

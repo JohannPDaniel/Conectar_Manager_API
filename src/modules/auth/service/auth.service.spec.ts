@@ -2,7 +2,7 @@ import { getModelToken } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserMock } from '../../../config/mock/user.mock';
 import { User } from '../../../config/models/user.model';
-import { Bcrypt, JWT } from '../../../utils';
+import { Bcrypt, JWT } from '../../../config/utils';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {

@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
-import { UserRole } from '../../types';
 import { User } from '../models/user.model';
+import { UserRole } from '../types';
 
 export class UserMock {
   public static build(params?: Partial<User>) {

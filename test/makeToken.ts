@@ -1,5 +1,5 @@
+import { JWT } from '../src/config/utils';
 import { AuthUser } from '../src/modules/auth/dto';
-import { JWT } from '../src/utils';
 
 export function makeToken(payload: AuthUser) {
   const jwt = new JWT();

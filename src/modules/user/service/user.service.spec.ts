@@ -2,11 +2,11 @@ import { getModelToken } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserMock } from '../../../config/mock/user.mock';
 import { User } from '../../../config/models/user.model';
-import { UserRole } from '../../../types';
-import { JWT } from '../../../utils';
+import { JWT } from '../../../config/utils';
 import { AuthUser } from '../../auth/dto';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { UserService } from './user.service';
+import { UserRole } from '../../../config/types';
 
 describe('UserService', () => {
   let service: UserService;
