@@ -90,9 +90,9 @@ export class UserController {
 
   @Delete(':id')
   @Roles(UserRole.ADMIN)
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     try {
-      return this.userService.remove(id);
+      return await this.userService.remove(id);
     } catch (error: any) {
       return {
         success: false,
