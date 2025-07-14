@@ -16,7 +16,7 @@ describe('UserController (e2e) /users', () => {
   const endpoint = '/users';
   let token: string;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [DatabaseModule, SequelizeModule.forFeature([User]), UserModule],
     }).compile();
@@ -26,8 +26,59 @@ describe('UserController (e2e) /users', () => {
     server = app.getHttpServer();
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
+    jest.resetModules();
+    jest.clearAllMocks();
     await app.close();
+  });
+
+  it('Deve retornar 401 se o token não for enviado', async () => {
+    const response = await supertest(server).get(endpoint);
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBeFalsy();
+    expect(response.body.message).toMatch(/Token.*autenticado/i);
+  });
+
+  it('Deve retornar 401 se o formato do token não tiver Bearer', async () => {
+    token = 'any_token';
+
+    const response = await supertest(server)
+      .get(endpoint)
+      .set('Authorization', `${token}`);
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBeFalsy();
+    expect(response.body.message).toMatch(/Bearer.*token/i);
+  });
+
+  it('Deve retornar 401 se o usuário não for autenticado com JWT', async () => {
+    token = 'any_token';
+
+    const response = await supertest(server)
+      .get(endpoint)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(401);
+    expect(response.body.success).toBeFalsy();
+    expect(response.body.message).toMatch(/Usuário.*autenticado/i);
+  });
+
+  it('Deve retornar 400 se a permissão do usuário não vir em formato de texto', async () => {
+    token = makeToken({ role: 'admin' } as AuthUser);
+
+    const query = {
+      role: 1,
+    };
+
+    const response = await supertest(server)
+      .get(`${endpoint}?role=${query.role}`)
+      .set(`Authorization`, `Bearer ${token}`);
+    console.log('response:', response.body);
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBeFalsy();
+    expect(response.body.message).toMatch(/permissão.*texto/i);
   });
 
   it('Deve retornar os usuários buscados quando fornecido uma consulta válida', async () => {
