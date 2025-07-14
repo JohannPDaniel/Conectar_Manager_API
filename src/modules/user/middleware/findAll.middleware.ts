@@ -8,7 +8,7 @@ export class FindAllMiddleware implements NestMiddleware {
     const userRole = req.user.role;
 
     if (userRole === UserRole.ADMIN) {
-      if (role && !['admin', 'user'].includes(role)) {
+      if (role && !['admin', 'user'].includes(role as string)) {
         res.status(400).json({
           success: false,
           message: 'A permissão deve ser obrigatóriamente ou (admin) ou (user)',
@@ -16,7 +16,7 @@ export class FindAllMiddleware implements NestMiddleware {
         return;
       }
 
-      if (sortBy && !['name', 'createdAt'].includes(sortBy)) {
+      if (sortBy && !['name', 'createdAt'].includes(sortBy as string)) {
         res.status(400).json({
           success: false,
           message:
@@ -25,7 +25,7 @@ export class FindAllMiddleware implements NestMiddleware {
         return;
       }
 
-      if (order && !['ASC', 'DESC'].includes(order)) {
+      if (order && !['ASC', 'DESC'].includes(order as string)) {
         res.status(400).json({
           success: false,
           message: 'A ordem deve ser ou (ASC) ou (DESC)',
