@@ -142,6 +142,7 @@ export class UserService {
     const isAdmin = currentUser.role === UserRole.ADMIN;
     const isSelf = currentUser.id === user.id;
 
+    // ❌ Usuário comum tentando alterar outro usuário
     if (!isAdmin && !isSelf) {
       return {
         success: false,
@@ -150,7 +151,7 @@ export class UserService {
       };
     }
 
-    // 🚫 Impede user comum de atualizar o campo role se ele estiver presente e definido
+    // ❌ Usuário comum tentando alterar o campo role
     if (!isAdmin && data.role !== undefined) {
       return {
         success: false,
@@ -159,6 +160,16 @@ export class UserService {
       };
     }
 
+    // ❌ Mesmo admin não pode mudar o próprio role
+    if (isSelf && data.role !== undefined && data.role !== user.role) {
+      return {
+        success: false,
+        code: 403,
+        message: 'Você não pode alterar seu próprio cargo (role).',
+      };
+    }
+
+    // ✅ Limpa o campo role se não for admin
     if (!isAdmin) {
       delete data.role;
     }

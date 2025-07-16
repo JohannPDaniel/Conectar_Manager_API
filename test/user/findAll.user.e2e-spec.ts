@@ -10,7 +10,7 @@ import supertest from 'supertest';
 import { makeToken } from '../makeToken';
 import { TestDatabaseModule } from '../TestDatabase.module';
 
-describe('UserController (e2e) /users', () => {
+describe('UserController (e2e) - GET - /users', () => {
   let app: NestExpressApplication;
   let server: Server;
   const endpoint = '/users';
@@ -147,5 +147,32 @@ describe('UserController (e2e) /users', () => {
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
     expect(response.body.message).toMatch(/Usuários.*sucesso/i);
+  });
+
+  it('Deve retornar 500 quando houver um erro no servidor.', async () => {
+    token = makeToken({ role: 'admin' } as AuthUser);
+
+    const query = {
+      role: 'admin' as 'admin' | 'user',
+      name: 'Johann',
+      sortBy: 'name' as 'name' | 'createdAt',
+      order: 'ASC' as 'ASC' | 'DESC',
+    };
+
+    const { role, name, sortBy, order } = query;
+
+    jest
+      .spyOn(UserService.prototype, 'findAll')
+      .mockRejectedValue(new Error('Excessão'));
+
+    const response = await supertest(server)
+      .get(
+        `${endpoint}?role=${role}&name=${name}&sortBy=${sortBy}&order=${order}`,
+      )
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.body.code).toBe(500);
+    expect(response.body.success).toBeFalsy();
+    expect(response.body.message).toMatch(/Erro.*servidor/i);
   });
 });
