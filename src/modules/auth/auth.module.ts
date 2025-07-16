@@ -1,16 +1,17 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
-import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from '@/config/models/user.model';
 import { Bcrypt, JWT } from '@/config/utils';
 import { MiddlewareConfig } from '@/middleware.config';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { GoogleStrategy } from '../../config/strategy/google.strategy';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './service/auth.service';
 
 @Module({
   imports: [SequelizeModule.forFeature([User])],
   controllers: [AuthController],
-  providers: [AuthService, JWT, Bcrypt],
+  providers: [AuthService, JWT, Bcrypt, GoogleStrategy],
   exports: [JWT],
 })
 export class AuthModule implements NestModule {

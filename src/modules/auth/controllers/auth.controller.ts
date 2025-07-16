@@ -1,7 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
 import { ResponseAPI } from '@/config/types';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import type { CreateUserDto, LoginDto } from '../dto';
 import { AuthService } from '../service/auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -31,5 +32,20 @@ export class AuthController {
         message: `Erro no servidor: ${error.message}`,
       };
     }
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth() {
+    // redireciona para o Google
+  }
+
+  @Get('google/callback')
+  @UseGuards(AuthGuard('google'))
+  public googleAuthRedirect(@Req() req) {
+    return {
+      message: 'Usuário autenticado com sucesso',
+      user: req.user,
+    };
   }
 }
