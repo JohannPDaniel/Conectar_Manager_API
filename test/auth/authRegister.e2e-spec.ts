@@ -1,4 +1,3 @@
-import { DatabaseModule } from '@/config/database/database.module';
 import { User } from '@/config/models/user.model';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { UserDto } from '@/modules/auth/dto';
@@ -8,6 +7,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Server } from 'http';
 import supertest from 'supertest';
+import { TestDatabaseModule } from '../TestDatabase.module';
 
 describe('AuthController (e2e) - /auth/register', () => {
   let app: NestExpressApplication;
@@ -16,7 +16,11 @@ describe('AuthController (e2e) - /auth/register', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [DatabaseModule, SequelizeModule.forFeature([User]), AuthModule],
+      imports: [
+        TestDatabaseModule,
+        SequelizeModule.forFeature([User]),
+        AuthModule,
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();

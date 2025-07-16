@@ -1,4 +1,3 @@
-import { DatabaseModule } from '@/config/database/database.module';
 import { User } from '@/config/models/user.model';
 import { AuthUser } from '@/modules/auth/dto';
 import { UserService } from '@/modules/user/service/user.service';
@@ -9,6 +8,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Server } from 'http';
 import supertest from 'supertest';
 import { makeToken } from '../makeToken';
+import { TestDatabaseModule } from '../TestDatabase.module';
 
 describe('UserController (e2e) /users', () => {
   let app: NestExpressApplication;
@@ -16,9 +16,13 @@ describe('UserController (e2e) /users', () => {
   const endpoint = '/users';
   let token: string;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [DatabaseModule, SequelizeModule.forFeature([User]), UserModule],
+      imports: [
+        TestDatabaseModule,
+        SequelizeModule.forFeature([User]),
+        UserModule,
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -26,9 +30,7 @@ describe('UserController (e2e) /users', () => {
     server = app.getHttpServer();
   });
 
-  afterEach(async () => {
-    jest.resetModules();
-    jest.clearAllMocks();
+  afterAll(async () => {
     await app.close();
   });
 
@@ -64,7 +66,7 @@ describe('UserController (e2e) /users', () => {
     expect(response.body.message).toMatch(/Usuário.*autenticado/i);
   });
 
-  it('Deve retornar 400 se a permissão do usuário não vir em formato de texto', async () => {
+  it('Deve retornar 400 se a permissão for diferente de admin ou user', async () => {
     token = makeToken({ role: 'admin' } as AuthUser);
 
     const query = {
@@ -74,11 +76,47 @@ describe('UserController (e2e) /users', () => {
     const response = await supertest(server)
       .get(`${endpoint}?role=${query.role}`)
       .set(`Authorization`, `Bearer ${token}`);
-    console.log('response:', response.body);
 
     expect(response.status).toBe(400);
     expect(response.body.success).toBeFalsy();
-    expect(response.body.message).toMatch(/permissão.*texto/i);
+    expect(response.body.message).toMatch(/admin.*user/i);
+  });
+
+  it('Deve retornar 400 se o sortBy for diferente de name ou createdAt', async () => {
+    token = makeToken({ role: 'admin' } as AuthUser);
+
+    const query = {
+      role: 'user',
+      sortBy: true,
+    };
+
+    const response = await supertest(server)
+      .get(`${endpoint}?role=${query.role}&sortBy=${query.sortBy}`)
+      .set(`Authorization`, `Bearer ${token}`);
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBeFalsy();
+    expect(response.body.message).toMatch(/name.*createdAt/i);
+  });
+
+  it('Deve retornar 400 se o order for diferente de ASC ou DESC', async () => {
+    token = makeToken({ role: 'admin' } as AuthUser);
+
+    const query = {
+      role: 'user',
+      sortBy: 'name',
+      order: true,
+    };
+
+    const response = await supertest(server)
+      .get(
+        `${endpoint}?role=${query.role}&sortBy=${query.sortBy}&order=${query.order}`,
+      )
+      .set(`Authorization`, `Bearer ${token}`);
+
+    expect(response.status).toBe(400);
+    expect(response.body.success).toBeFalsy();
+    expect(response.body.message).toMatch(/ASC.*DESC/i);
   });
 
   it('Deve retornar os usuários buscados quando fornecido uma consulta válida', async () => {
