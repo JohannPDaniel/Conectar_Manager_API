@@ -56,4 +56,17 @@ export class AuthController {
       };
     }
   }
+
+  @Post('logout')
+  public async logout(@Body('accessToken') accessToken: string) {
+    try {
+      return await this.authService.revokeGoogleToken(accessToken);
+    } catch (error: any) {
+      return {
+        success: false,
+        code: 500,
+        message: `Erro no servidor: ${error.message}`,
+      };
+    }
+  }
 }

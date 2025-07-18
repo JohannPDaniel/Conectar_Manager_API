@@ -43,5 +43,5 @@ export class User extends Model<User, CreateUserDto> {
   declare lastLogin: Date | null;
 
   @Column({ type: DataType.STRING, allowNull: true, field: 'access_token' })
-  declare accessToken: string;
+  declare accessToken: string | null;
 }

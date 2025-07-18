@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { AuthUserGoogle } from '../../../config/types/authUserGoogle';
 import { AuthUser, CreateUserDto, LoginDto, UserDto } from '../dto';
+import { api } from './api.service';
 
 @Injectable()
 export class AuthService {
@@ -112,6 +113,48 @@ export class AuthService {
         },
       };
     }
+
+    // <-- Adiciona isso aqui!
+    existingUser.lastLogin = new Date();
+    existingUser.accessToken = data.accessToken;
+    await existingUser.save();
+
+    return {
+      success: true,
+      code: 200,
+      message: 'Login com Google realizado com sucesso',
+      data: {
+        ...existingUser.get(),
+        accessToken: data.accessToken,
+      },
+    };
+  }
+
+  public async revokeGoogleToken(accessToken: string) {
+    const response = await api.post(
+      '/revoke',
+      {},
+      {
+        params: {
+          token: accessToken,
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    );
+
+    await this.userModel.update(
+      { accessToken: null },
+      { where: { accessToken: accessToken } },
+    );
+
+    return {
+      success: true,
+      code: 201,
+      message: 'Token revogado com sucesso',
+      data: response.data,
+    };
   }
 
   private mapToDto(data: User): UserDto {
