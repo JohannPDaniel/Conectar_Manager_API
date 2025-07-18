@@ -3,6 +3,7 @@ import { UserRole } from '@/config/types';
 import { Bcrypt, JWT } from '@/config/utils';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { AuthUserGoogle } from '../../../config/types/authUserGoogle';
 import { AuthUser, CreateUserDto, LoginDto, UserDto } from '../dto';
 
 @Injectable()
@@ -82,6 +83,36 @@ export class AuthService {
       message: 'Login efetuado com sucesso !!!',
       data: { token: token },
     };
+  }
+
+  public async loginGoogle(data: AuthUserGoogle) {
+    const existingUser = await this.userModel.findOne({
+      where: { email: data.email },
+    });
+
+    if (!existingUser) {
+      const createUser = await this.userModel.create({
+        email: data.email,
+        name: data.name,
+        password: data.password,
+        role: data.role,
+      });
+
+      createUser.lastLogin = new Date();
+      createUser.refreshToken = data.refreshToken;
+      await createUser.save();
+
+      return {
+        success: true,
+        code: 201,
+        message: 'Usuário criado automaticamente via Google',
+        data: {
+          ...createUser.get(),
+          refreshToken: data.refreshToken,
+          accessToken: data.accessToken,
+        },
+      };
+    }
   }
 
   private mapToDto(data: User): UserDto {
