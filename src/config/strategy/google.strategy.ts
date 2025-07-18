@@ -45,7 +45,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       createdAt: new Date(),
       updatedAt: new Date(),
       lastLogin: new Date(),
-      refreshToken,
       accessToken,
     };
 
