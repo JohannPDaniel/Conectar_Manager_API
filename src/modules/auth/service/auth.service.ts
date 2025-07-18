@@ -99,7 +99,7 @@ export class AuthService {
       });
 
       createUser.lastLogin = new Date();
-      createUser.refreshToken = data.refreshToken;
+      createUser.accessToken = data.accessToken;
       await createUser.save();
 
       return {
@@ -108,7 +108,6 @@ export class AuthService {
         message: 'Usuário criado automaticamente via Google',
         data: {
           ...createUser.get(),
-          refreshToken: data.refreshToken,
           accessToken: data.accessToken,
         },
       };

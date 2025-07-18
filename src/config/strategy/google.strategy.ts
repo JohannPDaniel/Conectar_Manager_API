@@ -21,6 +21,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
       callbackURL: `http://localhost:${process.env.PORT}/auth/google/callback`,
       scope: ['email', 'profile'],
+      accessType: 'offline',
+      prompt: 'consent',
     };
     super(options);
   }
@@ -43,13 +45,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       createdAt: new Date(),
       updatedAt: new Date(),
       lastLogin: new Date(),
+      refreshToken,
+      accessToken,
     };
 
     // Retorne esse objeto direto
-    done(null, {
-      ...userGoogle,
-      refreshToken,
-      accessToken,
-    });
+    done(null, userGoogle);
   }
 }

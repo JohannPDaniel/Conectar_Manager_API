@@ -9,6 +9,5 @@ export interface AuthUserGoogle {
   createdAt: Date;
   updatedAt: Date;
   lastLogin: Date;
-  refreshToken: string;
   accessToken: string;
 }

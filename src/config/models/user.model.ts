@@ -42,6 +42,6 @@ export class User extends Model<User, CreateUserDto> {
   @Column({ type: DataType.DATE, allowNull: true, field: 'last_login' })
   declare lastLogin: Date | null;
 
-  @Column({ type: DataType.STRING, allowNull: true, field: 'refresh_token' })
-  declare refreshToken: string;
+  @Column({ type: DataType.STRING, allowNull: true, field: 'access_token' })
+  declare accessToken: string;
 }
