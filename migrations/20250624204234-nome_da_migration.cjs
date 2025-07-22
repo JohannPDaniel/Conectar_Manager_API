@@ -46,11 +46,6 @@ module.exports = {
         allowNull: true,
         field: 'last_login',
       },
-      accessToken: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        field: 'access_token',
-      },
     });
     // await queryInterface.renameColumn('users', 'createdAt', 'created_at');
     // await queryInterface.renameColumn('users', 'updatedAt', 'updated_at');

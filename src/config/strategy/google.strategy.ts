@@ -27,7 +27,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     // Retorna diretamente o conteúdo que deve estar em req.userGoogle
     const userGoogle = {
       id: profile.id,
-      name: `${name?.givenName.toUpperCase()} ${name?.familyName.toUpperCase()}`,
+      name: `${name?.givenName} ${name?.familyName}`,
       email: emails?.[0].value,
       password: 'oauth',
       role: UserRole.USER,

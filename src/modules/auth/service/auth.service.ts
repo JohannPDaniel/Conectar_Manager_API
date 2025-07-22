@@ -100,7 +100,6 @@ export class AuthService {
       });
 
       createUser.lastLogin = new Date();
-      createUser.accessToken = data.accessToken;
       await createUser.save();
 
       return {
@@ -116,7 +115,6 @@ export class AuthService {
 
     // <-- Adiciona isso aqui!
     existingUser.lastLogin = new Date();
-    existingUser.accessToken = data.accessToken;
     await existingUser.save();
 
     return {
@@ -144,14 +142,9 @@ export class AuthService {
       },
     );
 
-    await this.userModel.update(
-      { accessToken: null },
-      { where: { accessToken: accessToken } },
-    );
-
     return {
       success: true,
-      code: 201,
+      code: 200,
       message: 'Token revogado com sucesso',
       data: response.data,
     };

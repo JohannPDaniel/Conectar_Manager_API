@@ -27,8 +27,8 @@ HTTP/1.1 201  - Created
 x-powered-by: Express
 content-type: application/json; charset=utf-8
 content-length: 76
-etag: W/"4c-Ji/x3bDgsz2sp6Z415ifJiKI26k"
-date: Fri, 18 Jul 2025 20:37:15 GMT
+etag: W/"4c-4RlqpHhgeErwYmxmr3cl18MM+eo"
+date: Tue, 22 Jul 2025 16:06:50 GMT
 connection: close
 ###
 GET http://localhost:3030/auth/google/callback
