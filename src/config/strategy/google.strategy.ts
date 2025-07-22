@@ -28,10 +28,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     const userGoogle = {
       id: profile.id,
       name: `${name?.givenName} ${name?.familyName}`,
-      email: emails?.[0].value,
+      email: emails?.[0]?.value ?? '',
       password: 'oauth',
       role: UserRole.USER,
-      picture: photos?.[0].value,
+      picture: photos?.[0].value ?? '',
       createdAt: new Date(),
       updatedAt: new Date(),
       lastLogin: new Date(),

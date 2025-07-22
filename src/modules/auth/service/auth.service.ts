@@ -3,9 +3,9 @@ import { UserRole } from '@/config/types';
 import { Bcrypt, JWT } from '@/config/utils';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { google } from 'googleapis';
 import { AuthUserGoogle } from '../../../config/types/authUserGoogle';
 import { AuthUser, CreateUserDto, LoginDto, UserDto } from '../dto';
-import { api } from './api.service';
 
 @Injectable()
 export class AuthService {
@@ -129,24 +129,22 @@ export class AuthService {
   }
 
   public async revokeGoogleToken(accessToken: string) {
-    const response = await api.post(
-      '/revoke',
-      {},
-      {
-        params: {
-          token: accessToken,
-        },
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      },
-    );
+    const oauth2Client = new google.auth.OAuth2();
+
+    const response = await oauth2Client.revokeToken(accessToken);
+
+    if (!response?.status || response?.status !== 200) {
+      return {
+        success: false,
+        code: 404,
+        message: 'Falha ao revogar o token',
+      };
+    }
 
     return {
       success: true,
       code: 200,
-      message: 'Token revogado com sucesso',
-      data: response.data,
+      message: 'Token revogado com sucesso (googleapis)',
     };
   }
 

@@ -1,8 +1,18 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import type { Request, Response } from 'express';
 import type { ResponseAPI } from '../../../config/types';
 import { AuthUserGoogle } from '../../../config/types/authUserGoogle';
 import { CreateUserDto, LoginDto } from '../dto';
+import { LogoutDto } from '../dto/logoutDto';
 import { AuthService } from '../service/auth.service';
 
 @Controller('auth')
@@ -45,9 +55,14 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   public async googleAuthRedirect(
     @Req() req: Request & { user: AuthUserGoogle },
+    @Res() res: Response,
   ) {
     try {
-      return await this.authService.loginGoogle(req.user);
+      const userData = await this.authService.loginGoogle(req.user);
+      const queryString = new URLSearchParams({
+        accessToken: userData.data.accessToken,
+      }).toString();
+      res.redirect(`http://localhost:5173/logado?${queryString}`);
     } catch (error: any) {
       return {
         success: false,
@@ -58,8 +73,9 @@ export class AuthController {
   }
 
   @Post('logout')
-  public async logout(@Body('accessToken') accessToken: string) {
+  public async logout(@Body() body: LogoutDto) {
     try {
+      const { accessToken } = body;
       return await this.authService.revokeGoogleToken(accessToken);
     } catch (error: any) {
       return {
