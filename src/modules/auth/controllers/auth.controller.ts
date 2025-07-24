@@ -45,9 +45,24 @@ export class AuthController {
     }
   }
 
+  @Get('me')
+  @UseGuards(AuthGuard('google'))
+  async getMe(@Req() req: Request & { user: AuthUserGoogle }) {
+    try {
+      const user = req.user;
+      return await this.authService.loginGoogle(user);
+    } catch (error: any) {
+      return {
+        success: false,
+        code: 500,
+        message: `Erro no servidor: ${error.message}`,
+      };
+    }
+  }
+
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  async googleAuth() {
+  googleAuth() {
     // redireciona para o Google
   }
 
@@ -58,11 +73,14 @@ export class AuthController {
     @Res() res: Response,
   ) {
     try {
-      const userData = await this.authService.loginGoogle(req.user);
-      const queryString = new URLSearchParams({
-        accessToken: userData.data.accessToken,
-      }).toString();
-      res.redirect(`http://localhost:5173/logado?${queryString}`);
+      const user = req.user as AuthUserGoogle;
+
+      const token = await this.authService.loginGoogle(user);
+
+      // Redireciona para o frontend com o token na URL
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/logado?accessToken=${token.data.accessToken}`,
+      );
     } catch (error: any) {
       return {
         success: false,

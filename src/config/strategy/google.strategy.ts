@@ -12,7 +12,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       callbackURL: `http://localhost:${process.env.PORT}/auth/google/callback`,
       scope: ['email', 'profile'],
       accessType: 'offline',
-      prompt: 'consent',
+      prompt: 'select_account',
+      include_granted_scopes: true,
     };
     super(options);
   }
@@ -40,6 +41,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     };
 
     // Retorne esse objeto direto
-    done(null, userGoogle);
+    return userGoogle;
   }
 }
