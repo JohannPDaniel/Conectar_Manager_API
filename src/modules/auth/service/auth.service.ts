@@ -95,7 +95,7 @@ export class AuthService {
       const createUser = await this.userModel.create({
         email: data.email,
         name: data.name,
-        password: data.password,
+        password: data.password ?? '',
         role: data.role,
       });
 
@@ -129,7 +129,10 @@ export class AuthService {
   }
 
   public async revokeGoogleToken(accessToken: string) {
-    const oauth2Client = new google.auth.OAuth2();
+    const oauth2Client = new google.auth.OAuth2(
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
+    );
 
     const response = await oauth2Client.revokeToken(accessToken);
 

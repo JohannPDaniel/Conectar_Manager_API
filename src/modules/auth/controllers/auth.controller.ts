@@ -46,11 +46,15 @@ export class AuthController {
   }
 
   @Get('me')
-  @UseGuards(AuthGuard('google'))
-  async getMe(@Req() req: Request & { user: AuthUserGoogle }) {
+  getMe(@Req() req: Request & { user: AuthUserGoogle }) {
     try {
       const user = req.user;
-      return await this.authService.loginGoogle(user);
+
+      return {
+        success: true,
+        message: 'Usuário autenticado com sucesso',
+        data: user,
+      };
     } catch (error: any) {
       return {
         success: false,
@@ -62,32 +66,26 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  googleAuth() {
+  async googleAuth() {
     // redireciona para o Google
   }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  public async googleAuthRedirect(
-    @Req() req: Request & { user: AuthUserGoogle },
-    @Res() res: Response,
-  ) {
-    try {
-      const user = req.user as AuthUserGoogle;
+  googleCallback(@Req() req: Request, @Res() res: Response) {
+    const user = req.user as AuthUserGoogle;
 
-      const token = await this.authService.loginGoogle(user);
-
-      // Redireciona para o frontend com o token na URL
-      return res.redirect(
-        `${process.env.FRONTEND_URL}/logado?accessToken=${token.data.accessToken}`,
-      );
-    } catch (error: any) {
-      return {
-        success: false,
-        code: 500,
-        message: `Erro no servidor: ${error.message}`,
-      };
-    }
+    // Aqui você pode redirecionar para o frontend com os dados
+    const redirectUrl = new URL('http://localhost:5173/logado');
+    const data = {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+      accessToken: user.accessToken,
+    };
+    redirectUrl.searchParams.set('data', JSON.stringify(data));
+    return res.redirect(redirectUrl.toString());
   }
 
   @Post('logout')

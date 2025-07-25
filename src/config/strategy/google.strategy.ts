@@ -1,21 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
+import {
+  Strategy as GoogleStrategyBase,
+  Profile,
+  VerifyCallback,
+} from 'passport-google-oauth20';
 import { UserRole } from '../types';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+export class GoogleStrategy extends PassportStrategy(
+  GoogleStrategyBase,
+  'google',
+) {
   constructor() {
     const options = {
       clientID: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
       callbackURL: `http://localhost:${process.env.PORT}/auth/google/callback`,
-      scope: ['email', 'profile'],
+      scope: ['email', 'profile'], // <--- aqui!
       accessType: 'offline',
-      prompt: 'select_account',
-      include_granted_scopes: true,
+      prompt: 'consent',
     };
-    super(options);
+
+    super(options as any);
   }
   validate(
     accessToken: string,
@@ -30,17 +37,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       id: profile.id,
       name: `${name?.givenName} ${name?.familyName}`,
       email: emails?.[0]?.value ?? '',
+      picture: photos?.[0]?.value ?? '',
       password: 'oauth',
       role: UserRole.USER,
-      picture: photos?.[0].value ?? '',
       createdAt: new Date(),
       updatedAt: new Date(),
       lastLogin: new Date(),
       accessToken,
-      refreshToken,
     };
 
-    // Retorne esse objeto direto
-    return userGoogle;
+    return done(null, userGoogle);
   }
 }
